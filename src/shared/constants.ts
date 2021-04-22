@@ -1,4 +1,4 @@
-import { ICategory, IThesis, IThesisStatus, IUser } from "./types";
+import { ICategory, IThesis, IThesisStatus, IUser, UserRegister } from "./types";
 
 export const THESIS_STATI: IThesisStatus[] = [
   { id: 1, name: "None" },
@@ -37,3 +37,11 @@ export const MOCK_USER: IUser = {
   password: "1234",
   category: ALL_CATEGORIES[0],
 };
+
+export const MOCK_USER_2: UserRegister = {
+    username: "hans_peter",
+    password: "1234",
+    confirm_password: "1234",
+    email: "hans.peter@gmail.com",
+    supervisor: true,
+  };
