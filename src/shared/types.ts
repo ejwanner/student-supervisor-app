@@ -29,3 +29,13 @@ export interface IUser {
   number: string;
   category: ICategory;
 }
+
+// redux types
+
+export type AppState = {
+  thesis: ThesisState;
+};
+
+export type ThesisState = {
+  allThesis: IThesis[];
+};
