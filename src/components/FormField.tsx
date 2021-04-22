@@ -22,6 +22,7 @@ const FormField: React.FC<FormFieldProps> = ({
       label={label}
       onBlur={onBlur}
       onChangeText={onChange}
+      value={value}
     />
   );
 };
