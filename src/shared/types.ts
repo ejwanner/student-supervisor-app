@@ -21,3 +21,11 @@ export interface ICategory {
   id: number;
   name: string;
 }
+
+export interface IUser {
+  id?: number;
+  username: string;
+  password: string;
+  number: string;
+  category: ICategory;
+}

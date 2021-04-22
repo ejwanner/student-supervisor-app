@@ -12,8 +12,7 @@ const ThesisOverview = () => {
   const [thesisCategories] = React.useState<ICategory[]>(ALL_CATEGORIES);
   const [isFilterOpen, setIsFilterOpen] = React.useState<boolean>(false);
   return (
-    <ViewContainer>
-      <Text style={styles.title}>Thesis Overview</Text>
+    <ViewContainer title="Thesis Overview">
       <View style={styles.filterRow}>
         <FilterButton data={thesisStatus} text="Status" />
         <FilterButton data={thesisCategories} text="Categories" />

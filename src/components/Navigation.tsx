@@ -2,11 +2,11 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { BottomNavigation } from "react-native-paper";
 import ThesisOverview from "../views/ThesisOverview";
-import Profile from "../views/Profile";
+import Settings from "../views/Settings";
 
 const ROUTES: Array<{ key: string; title: string; icon: string }> = [
   { key: "thesisOverview", title: "Thesis Overview", icon: "book" },
-  { key: "profile", title: "Profile", icon: "account" },
+  { key: "settings", title: "Settings", icon: "cog" },
 ];
 
 const Navigation: React.FC = () => {
@@ -17,7 +17,7 @@ const Navigation: React.FC = () => {
 
   const renderScene = BottomNavigation.SceneMap({
     thesisOverview: ThesisOverview,
-    profile: Profile,
+    settings: Settings,
   });
 
   return (
