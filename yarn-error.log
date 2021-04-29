@@ -1,0 +1,75 @@
+Arguments: 
+  /Users/client-side96/.nvm/versions/node/v12.20.2/bin/node /Users/client-side96/.nvm/versions/node/v12.20.2/bin/yarn install
+
+PATH: 
+  /Users/client-side96/.cabal/bin:/Users/client-side96/.ghcup/bin:/Users/client-side96/.composer/vendor/bin:/Users/client-side96/.pyenv/shims:/Users/client-side96/.nvm/versions/node/v12.20.2/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/share/dotnet:~/.dotnet/tools:/Library/Apple/usr/bin:/Users/client-side96/.cabal/bin:/Users/client-side96/.ghcup/bin:/Users/client-side96/.composer/vendor/bin:/Users/client-side96/.pyenv/shims:/Users/client-side96/.nvm/versions/node/v12.20.2/bin
+
+Yarn version: 
+  1.22.10
+
+Node version: 
+  12.20.2
+
+Platform: 
+  darwin x64
+
+Trace: 
+  SyntaxError: /Users/client-side96/Projects/App-Development/University/IWMB01/thesis-supervisor/thesis-supervisor-ui/package.json: Unexpected token < in JSON at position 239
+      at JSON.parse (<anonymous>)
+      at /Users/client-side96/.nvm/versions/node/v12.20.2/lib/node_modules/yarn/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/Users/client-side96/.nvm/versions/node/v12.20.2/lib/node_modules/yarn/lib/cli.js:310:30)
+      at /Users/client-side96/.nvm/versions/node/v12.20.2/lib/node_modules/yarn/lib/cli.js:321:13
+
+npm manifest: 
+  {
+    "main": "node_modules/expo/AppEntry.js",
+    "scripts": {
+      "start": "expo start",
+      "android": "expo start --android",
+      "ios": "expo start --ios",
+      "web": "expo start --web",
+      "eject": "expo eject"
+    },
+    "dependencies": {
+  <<<<<<< HEAD
+      "@react-native-community/masked-view": "^0.1.10",
+      "@react-navigation/native": "^5.9.4",
+      "@react-navigation/stack": "^5.14.4",
+  =======
+      "@reduxjs/toolkit": "^1.5.1",
+  >>>>>>> domi
+      "expo": "~40.0.0",
+      "expo-status-bar": "~1.0.3",
+      "react": "16.13.1",
+      "react-dom": "16.13.1",
+      "react-hook-form": "^7.2.3",
+      "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
+      "react-native-gesture-handler": "^1.10.3",
+      "react-native-paper": "^4.7.2",
+  <<<<<<< HEAD
+      "react-native-reanimated": "^2.1.0",
+      "react-native-safe-area-context": "^3.1.9",
+      "react-native-screens": "^3.1.1",
+      "react-native-vector-icons": "^8.1.0",
+      "react-native-web": "~0.13.12"
+  =======
+      "react-native-web": "~0.13.12",
+      "react-redux": "^7.2.3"
+  >>>>>>> domi
+    },
+    "devDependencies": {
+      "@babel/core": "^7.9.0",
+      "@types/react": "~16.9.35",
+      "@types/react-dom": "~16.9.8",
+      "@types/react-native": "~0.63.2",
+      "typescript": "~4.0.0"
+    },
+    "private": true
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

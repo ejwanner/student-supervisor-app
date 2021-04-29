@@ -6,59 +6,70 @@ import { UserSignIn } from "../../shared/types";
 import FormField from "../FormField";
 
 type SignInFormProps = {
-  navigation: string;
   user: UserSignIn;
-//   onSubmit: (data: UserSignIn) => void;
+  onSubmit: (data: UserSignIn) => void;
+  navigateToRegister: () => void;
 };
 
-const SignInForm: React.FC<SignInFormProps> = ({ navigation, user }) => {
-    const { control, handleSubmit } = useForm({ defaultValues: user });
-        return (
-            <View style={styles.inputField}>
-                <Controller
-                    control={control}
-                    render={({ field: { onChange, onBlur, value } }) => (
-                    <FormField
-                        onBlur={onBlur}
-                        onChange={(value) => onChange(value)}
-                        value={value}
-                        label="Username"
-                    />
-                    )}
-                    name="username"
-                />
-                <Controller
-                    control={control}
-                    render={({ field: { onChange, onBlur, value } }) => (
-                    <FormField
-                        onBlur={onBlur}
-                        onChange={(value) => onChange(value)}
-                        value={value}
-                        label="Password"
-                    />
-                    )}
-                    name="password"
-                />
-                {/* <Button mode="contained" onPress={navigation.navigate('ThesisOverview')}> */}
-                <Button style={styles.button} mode="contained" onPress={() => console.log('Sign In Button Clicked')}>
-                    Sign In
-                </Button>
-                <Button style={styles.button} mode="outlined" onPress={() => console.log('Sign Up Button Clicked')}>
-                    Register
-                </Button>
-            </View>
-        );
+const SignInForm: React.FC<SignInFormProps> = ({
+  navigateToRegister,
+  user,
+  onSubmit,
+}) => {
+  const { control, handleSubmit } = useForm({ defaultValues: user });
+  return (
+    <View style={styles.inputField}>
+      <Controller
+        control={control}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <FormField
+            onBlur={onBlur}
+            onChange={(value) => onChange(value)}
+            value={value}
+            label="Username"
+          />
+        )}
+        name="username"
+      />
+      <Controller
+        control={control}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <FormField
+            onBlur={onBlur}
+            onChange={(value) => onChange(value)}
+            value={value}
+            label="Password"
+          />
+        )}
+        name="password"
+      />
+      <Button
+        style={styles.button}
+        mode="contained"
+        onPress={handleSubmit(onSubmit)}
+      >
+        Sign In
+      </Button>
+      <Button
+        style={styles.button}
+        mode="outlined"
+        onPress={() => navigateToRegister()}
+      >
+        Register
+      </Button>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
-    button: {
-      marginTop: 18,
-    },
-    inputField: {
-        justifyContent: 'center',
-        alignContent: 'center',
-        marginTop: '10%'
-    },
-  });
+  button: {
+    marginTop: 18,
+  },
+  inputField: {
+    justifyContent: "center",
+    alignContent: "center",
+    marginTop: "10%",
+  },
+});
 
 export default SignInForm;

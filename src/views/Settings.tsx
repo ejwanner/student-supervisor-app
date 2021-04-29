@@ -11,7 +11,7 @@ const Settings: React.FC = () => {
     console.log(data);
   };
   return (
-    <ViewContainer title="Settings">
+    <ViewContainer>
       <Text style={styles.sectionTitle}>User information</Text>
       <UserInformationForm user={MOCK_USER} onSubmit={submitUserInformation} />
     </ViewContainer>

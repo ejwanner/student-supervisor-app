@@ -35,6 +35,7 @@ export const MOCK_USER: IUser = {
   id: 1,
   username: "domi_frey",
   password: "1234",
+  number: "123124523",
   category: ALL_CATEGORIES[0],
 };
 

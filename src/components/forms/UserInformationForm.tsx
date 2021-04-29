@@ -14,8 +14,13 @@ const UserInformationForm: React.FC<UserInformationFormProps> = ({
   onSubmit,
   user,
 }) => {
-  const { control, handleSubmit } = useForm({ defaultValues: user });
-  console.log(user);
+  const { control, handleSubmit } = useForm({
+    defaultValues: {
+      username: user.username,
+      number: user.number,
+      category: user.category.name,
+    },
+  });
   return (
     <View>
       <Controller
@@ -41,7 +46,6 @@ const UserInformationForm: React.FC<UserInformationFormProps> = ({
           />
         )}
         name="number"
-        defaultValue={user.number}
       />
       <Controller
         control={control}
@@ -53,8 +57,7 @@ const UserInformationForm: React.FC<UserInformationFormProps> = ({
             label="Category"
           />
         )}
-        name="category.name"
-        defaultValue={user.category.name}
+        name="category"
       />
       <Button mode="outlined" onPress={handleSubmit(onSubmit)}>
         Update user information

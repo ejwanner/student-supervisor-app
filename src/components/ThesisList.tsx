@@ -5,9 +5,10 @@ import { IThesis } from "../shared/types";
 
 type ThesisListProps = {
   thesisItems: IThesis[];
+  navigation: any;
 };
 
-const ThesisList: React.FC<ThesisListProps> = ({ thesisItems }) => {
+const ThesisList: React.FC<ThesisListProps> = ({ thesisItems, navigation }) => {
   return (
     <>
       {thesisItems &&
@@ -23,7 +24,7 @@ const ThesisList: React.FC<ThesisListProps> = ({ thesisItems }) => {
                   key={`thesis-list-btn-${index}`}
                   icon="book-information-variant"
                   size={20}
-                  onPress={() => console.log("navigate to details")}
+                  onPress={() => navigation.navigate("Thesis Detail")}
                 />
               )}
             />

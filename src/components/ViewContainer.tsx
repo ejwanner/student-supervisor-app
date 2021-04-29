@@ -2,22 +2,11 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Appbar } from "react-native-paper";
 
-type ViewContainerProps = {
-  title: string;
-  hasBackNavigation?: boolean;
-};
+type ViewContainerProps = {};
 
-const ViewContainer: React.FC<ViewContainerProps> = ({
-  title,
-  hasBackNavigation,
-  children,
-}) => {
+const ViewContainer: React.FC<ViewContainerProps> = ({ children }) => {
   return (
     <View style={styles.container}>
-      <Appbar.Header>
-        {hasBackNavigation && <Appbar.BackAction />}
-        <Appbar.Content title={title} />
-      </Appbar.Header>
       <View style={styles.pageContent}>{children}</View>
     </View>
   );

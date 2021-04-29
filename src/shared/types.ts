@@ -31,16 +31,35 @@ export interface IUser {
 }
 
 export interface UserSignIn {
-    username: string;
-    password: string;
+  username: string;
+  password: string;
 }
 
 export interface UserRegister {
-    username: string;
-    password: string;
-    confirm_password: string;
-    email: string;
-    supervisor: boolean;
+  username: string;
+  password: string;
+  confirm_password: string;
+  email: string;
+  supervisor: boolean;
 }
 
+export interface UserInfo {
+  username: string;
+  email: string;
+  supervisor: string;
+}
 
+// redux types
+export type AppState = {
+  thesis: ThesisState;
+  auth: AuthState;
+};
+
+export type ThesisState = {
+  allThesis: IThesis[];
+};
+
+export type AuthState = {
+  token: string | null;
+  userInfo: UserInfo | null;
+};
