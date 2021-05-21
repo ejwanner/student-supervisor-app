@@ -23,6 +23,7 @@ const FormField: React.FC<FormFieldProps> = ({
       onBlur={onBlur}
       onChangeText={onChange}
       value={value}
+      autoCapitalize='none'
     />
   );
 };

@@ -33,16 +33,16 @@ export const ALL_THESIS: IThesis[] = [
 
 export const MOCK_USER: IUser = {
   id: 1,
-  username: "domi_frey",
-  password: "1234",
+  name: "domi_frey",
+  email: 'test@test.de',
+  password: "test",
   number: "123124523",
   category: ALL_CATEGORIES[0],
 };
 
 export const MOCK_USER_2: UserRegister = {
-    username: "hans_peter",
+    name: "hans_peter",
     password: "1234",
-    confirm_password: "1234",
     email: "hans.peter@gmail.com",
     supervisor: true,
   };

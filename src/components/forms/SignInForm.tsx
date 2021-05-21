@@ -2,21 +2,28 @@ import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { StyleSheet, View } from "react-native";
 import { Button } from "react-native-paper";
-import { UserSignIn } from "../../shared/types";
+import { AppDispatch, UserLogin } from "../../shared/types";
 import FormField from "../FormField";
+import { login } from "../../shared/data/auth";
+import { connect } from "react-redux";
 
-type SignInFormProps = {
-  user: UserSignIn;
-  onSubmit: (data: UserSignIn) => void;
+type OwnProps = {
   navigateToRegister: () => void;
 };
 
+type DispatchProps = {
+  loginUser: (user: UserLogin) => void;
+};
+
+type SignInFormProps = OwnProps & DispatchProps;
+
 const SignInForm: React.FC<SignInFormProps> = ({
   navigateToRegister,
-  user,
-  onSubmit,
+  loginUser,
 }) => {
-  const { control, handleSubmit } = useForm({ defaultValues: user });
+  const { control, handleSubmit } = useForm({
+    defaultValues: { email: "", password: "" } as UserLogin,
+  });
   return (
     <View style={styles.inputField}>
       <Controller
@@ -26,10 +33,10 @@ const SignInForm: React.FC<SignInFormProps> = ({
             onBlur={onBlur}
             onChange={(value) => onChange(value)}
             value={value}
-            label="Username"
+            label="Email"
           />
         )}
-        name="username"
+        name="email"
       />
       <Controller
         control={control}
@@ -46,7 +53,7 @@ const SignInForm: React.FC<SignInFormProps> = ({
       <Button
         style={styles.button}
         mode="contained"
-        onPress={handleSubmit(onSubmit)}
+        onPress={handleSubmit(loginUser)}
       >
         Sign In
       </Button>
@@ -72,4 +79,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignInForm;
+const mapDispatchToProps = (dispatch: AppDispatch): DispatchProps => ({
+  loginUser: (user) => dispatch(login(user)),
+});
+
+export default connect(null, mapDispatchToProps)(SignInForm);

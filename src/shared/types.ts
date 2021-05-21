@@ -1,3 +1,6 @@
+import { ThunkDispatch } from "redux-thunk";
+import { AnyAction } from "redux";
+
 export interface IThesis {
   id: number;
   title: string;
@@ -24,7 +27,8 @@ export interface ICategory {
 
 export interface IUser {
   id?: number;
-  username: string;
+  name: string;
+  email: string;
   password: string;
   number: string;
   category: ICategory;
@@ -36,20 +40,23 @@ export interface UserSignIn {
 }
 
 export interface UserRegister {
-  username: string;
+  email: string;
+  name: string;
   password: string;
-  confirm_password: string;
+  supervisor: boolean;
+}
+
+export type UserLogin = Omit<UserRegister, "supervisor" | "name">;
+
+export interface UserInfo {
+  name: string;
   email: string;
   supervisor: boolean;
 }
 
-export interface UserInfo {
-  username: string;
-  email: string;
-  supervisor: string;
-}
-
 // redux types
+export type AppDispatch = ThunkDispatch<AppState, unknown, AnyAction>;
+
 export type AppState = {
   thesis: ThesisState;
   auth: AuthState;

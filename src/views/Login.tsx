@@ -3,7 +3,6 @@ import { Text } from "react-native-paper";
 import ViewContainer from "../components/ViewContainer";
 import { StyleSheet } from "react-native";
 import SignInForm from "../components/forms/SignInForm";
-import { MOCK_USER } from "../shared/constants";
 
 type LoginProps = {
   // here define props
@@ -11,9 +10,6 @@ type LoginProps = {
 };
 
 const Login: React.FC<LoginProps> = ({ navigation }) => {
-  const submit = (data: any) => {
-    console.log("login", data);
-  };
 
   const navigateToRegister = () => {
     navigation.navigate("Register");
@@ -22,9 +18,7 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
     <ViewContainer>
       <Text style={styles.title}>LOGIN</Text>
       <SignInForm
-        user={MOCK_USER}
         navigateToRegister={navigateToRegister}
-        onSubmit={submit}
       />
     </ViewContainer>
   );

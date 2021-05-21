@@ -1,5 +1,6 @@
 import { AnyAction } from "redux";
-import { AuthState, UserInfo } from "../../types";
+import { AppDispatch, AuthState, UserInfo, UserLogin } from "../../types";
+import { loginUser } from "../../com";
 
 export const SET_TOKEN = "AUTH/SET_TOKEN";
 export const SET_USERINFO = "AUTH/SET_USERINFO";
@@ -17,8 +18,15 @@ interface SetUserInfo {
 export type AuthActions = SetToken | SetUserInfo;
 
 const INITIAL_STATE: AuthState = {
+  // token: 'd',
   token: null,
   userInfo: null,
+};
+
+export const login = (user: UserLogin) => async (dispatch: AppDispatch) => {
+  return loginUser(user).then((res) =>
+    dispatch({ type: SET_TOKEN, payload: res.access_token })
+  );
 };
 
 export const setToken = (token: string | null): SetToken => ({
