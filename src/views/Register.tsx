@@ -5,17 +5,22 @@ import { StyleSheet } from "react-native";
 import { Button } from "react-native-paper";
 import RegisterForm from "../components/forms/RegisterForm";
 import { MOCK_USER_2 } from "../shared/constants";
+import { UserRegister } from "../shared/types";
+import { registerUser } from "../shared/com";
 
 type RegisterProps = {
   // here define props
   navigation: any;
 };
 
-const Register: React.FC<RegisterProps> = () => {
+const Register: React.FC<RegisterProps> = ({ navigation }) => {
+  const onSubmit = (newUser: UserRegister) => {
+    registerUser(newUser).then(() => navigation.navigate("Login"));
+  };
   return (
     <ViewContainer>
       <Text style={styles.title}>Register</Text>
-      <RegisterForm user={MOCK_USER_2} navigation={"ThesisOverview"} />
+      <RegisterForm onSubmit={onSubmit} />
     </ViewContainer>
   );
 };
