@@ -6,7 +6,7 @@ import { Button } from "react-native-paper";
 import { AppDispatch, AppState, UserInfo } from "../../shared/types";
 import FormField from "../FormField";
 import { getUserInfo } from "../../shared/data/auth/selectors";
-import { setIsUserSupervisor, updateUser } from "../../shared/data/auth";
+import { logoutUser, updateUser } from "../../shared/data/auth";
 
 type StateProps = {
   userInfo: UserInfo;
@@ -14,6 +14,7 @@ type StateProps = {
 
 type DispatchProps = {
   update: (user: UserInfo) => void;
+  logout: () => void;
 };
 
 type UserInformationFormProps = StateProps & DispatchProps;
@@ -21,6 +22,7 @@ type UserInformationFormProps = StateProps & DispatchProps;
 const UserInformationForm: React.FC<UserInformationFormProps> = ({
   userInfo,
   update,
+  logout,
 }) => {
   const { control, handleSubmit } = useForm<UserInfo>({
     defaultValues: {
@@ -54,8 +56,11 @@ const UserInformationForm: React.FC<UserInformationFormProps> = ({
         name="email"
       />
 
-      <Button mode="outlined" onPress={handleSubmit(update)}>
+      <Button mode="contained" onPress={handleSubmit(update)}>
         Update user information
+      </Button>
+      <Button mode="outlined" onPress={logout} style={{ marginTop: 10 }}>
+        Logout
       </Button>
     </View>
   );
@@ -67,6 +72,7 @@ const mapStateToProps = (state: AppState): StateProps => ({
 
 const mapDispatchToProps = (dispatch: AppDispatch): DispatchProps => ({
   update: (user) => dispatch(updateUser(user)),
+  logout: () => dispatch(logoutUser()),
 });
 
 export default connect(

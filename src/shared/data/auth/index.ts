@@ -10,6 +10,7 @@ import { createAction, createReducer } from "@reduxjs/toolkit";
 
 export const setToken = createAction<string>("auth/SET_TOKEN");
 export const setUserInfo = createAction<UserInfo>("auth/SET_USER_INFO");
+export const logoutUser = createAction("auth/LOGOUT");
 
 export const login = (user: UserLogin) => async (dispatch: AppDispatch) => {
   return com.loginUser(user).then((res) => {
@@ -38,6 +39,9 @@ const authReducer = createReducer(INITIAL_STATE, (builder) => {
   });
   builder.addCase(setUserInfo, (state, action) => {
     state.userInfo = action.payload;
+  });
+  builder.addCase(logoutUser, (state) => {
+    state.token = null;
   });
 });
 
