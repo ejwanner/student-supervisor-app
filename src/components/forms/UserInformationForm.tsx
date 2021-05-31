@@ -1,24 +1,30 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Controller, useForm } from "react-hook-form";
 import { View } from "react-native";
 import { Button } from "react-native-paper";
-import { IUser } from "../../shared/types";
+import { AppDispatch, AppState, UserInfo } from "../../shared/types";
 import FormField from "../FormField";
+import { getUserInfo } from "../../shared/data/auth/selectors";
+import { setIsUserSupervisor, updateUser } from "../../shared/data/auth";
 
-type UserInformationFormProps = {
-  user: IUser;
-  onSubmit: (data: IUser) => void;
+type StateProps = {
+  userInfo: UserInfo;
 };
 
+type DispatchProps = {
+  update: (user: UserInfo) => void;
+};
+
+type UserInformationFormProps = StateProps & DispatchProps;
+
 const UserInformationForm: React.FC<UserInformationFormProps> = ({
-  onSubmit,
-  user,
+  userInfo,
+  update,
 }) => {
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit } = useForm<UserInfo>({
     defaultValues: {
-      username: user.username,
-      number: user.number,
-      category: user.category.name,
+      ...userInfo,
     },
   });
   return (
@@ -33,7 +39,7 @@ const UserInformationForm: React.FC<UserInformationFormProps> = ({
             label="Username"
           />
         )}
-        name="username"
+        name="name"
       />
       <Controller
         control={control}
@@ -42,28 +48,28 @@ const UserInformationForm: React.FC<UserInformationFormProps> = ({
             onBlur={onBlur}
             onChange={(value) => onChange(value)}
             value={value}
-            label="Number"
+            label="E-Mail"
           />
         )}
-        name="number"
+        name="email"
       />
-      <Controller
-        control={control}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <FormField
-            onBlur={onBlur}
-            onChange={(value) => onChange(value)}
-            value={value}
-            label="Category"
-          />
-        )}
-        name="category"
-      />
-      <Button mode="outlined" onPress={handleSubmit(onSubmit)}>
+
+      <Button mode="outlined" onPress={handleSubmit(update)}>
         Update user information
       </Button>
     </View>
   );
 };
 
-export default UserInformationForm;
+const mapStateToProps = (state: AppState): StateProps => ({
+  userInfo: getUserInfo(state),
+});
+
+const mapDispatchToProps = (dispatch: AppDispatch): DispatchProps => ({
+  update: (user) => dispatch(updateUser(user)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UserInformationForm);

@@ -3,7 +3,7 @@ import { AppState, UserInfo } from "../../types";
 
 export const getUserInfo = createSelector(
   (state: AppState) => state.auth.userInfo,
-  (userInfo: UserInfo | null) => userInfo
+  (userInfo: UserInfo) => userInfo
 );
 
 export const getToken = createSelector(
