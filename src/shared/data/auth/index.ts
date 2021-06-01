@@ -6,11 +6,7 @@ import {
   UserLogin,
 } from "../../types";
 import * as com from "../../com";
-import { createAction, createReducer } from "@reduxjs/toolkit";
-
-export const setToken = createAction<string>("auth/SET_TOKEN");
-export const setUserInfo = createAction<UserInfo>("auth/SET_USER_INFO");
-export const logoutUser = createAction("auth/LOGOUT");
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export const login = (user: UserLogin) => async (dispatch: AppDispatch) => {
   return com.loginUser(user).then((res) => {
@@ -28,21 +24,27 @@ export const updateUser =
       .then((res) => dispatch(setUserInfo(res)));
   };
 
-const INITIAL_STATE: AuthState = {
+const initialState: AuthState = {
   token: null,
   userInfo: { name: "", email: "", supervisor: false },
 };
 
-const authReducer = createReducer(INITIAL_STATE, (builder) => {
-  builder.addCase(setToken, (state, action) => {
-    state.token = action.payload;
-  });
-  builder.addCase(setUserInfo, (state, action) => {
-    state.userInfo = action.payload;
-  });
-  builder.addCase(logoutUser, (state) => {
-    state.token = null;
-  });
+const authSlice = createSlice({
+  name: "auth",
+  initialState,
+  reducers: {
+    setToken(state, action: PayloadAction<string>) {
+      state.token = action.payload;
+    },
+    setUserInfo(state, action: PayloadAction<UserInfo>) {
+      state.userInfo = action.payload;
+    },
+    logoutUser(state) {
+      state.token = null;
+    },
+  },
 });
 
-export default authReducer;
+export const { setToken, setUserInfo, logoutUser } = authSlice.actions;
+
+export default authSlice.reducer;

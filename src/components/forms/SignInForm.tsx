@@ -5,25 +5,22 @@ import { Button } from "react-native-paper";
 import { AppDispatch, UserLogin } from "../../shared/types";
 import FormField from "../FormField";
 import { login } from "../../shared/data/auth";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 
 type OwnProps = {
   navigateToRegister: () => void;
 };
+type SignInFormProps = OwnProps;
 
-type DispatchProps = {
-  loginUser: (user: UserLogin) => void;
-};
+const SignInForm: React.FC<SignInFormProps> = ({ navigateToRegister }) => {
+  const dispatch = useDispatch();
 
-type SignInFormProps = OwnProps & DispatchProps;
-
-const SignInForm: React.FC<SignInFormProps> = ({
-  navigateToRegister,
-  loginUser,
-}) => {
   const { control, handleSubmit } = useForm({
     defaultValues: { email: "", password: "" } as UserLogin,
   });
+
+  const submitForm = (user: UserLogin) => dispatch(login(user));
+
   return (
     <View style={styles.inputField}>
       <Controller
@@ -53,7 +50,7 @@ const SignInForm: React.FC<SignInFormProps> = ({
       <Button
         style={styles.button}
         mode="contained"
-        onPress={handleSubmit(loginUser)}
+        onPress={handleSubmit(submitForm)}
       >
         Sign In
       </Button>
@@ -79,8 +76,4 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapDispatchToProps = (dispatch: AppDispatch): DispatchProps => ({
-  loginUser: (user) => dispatch(login(user)),
-});
-
-export default connect(null, mapDispatchToProps)(SignInForm);
+export default SignInForm;

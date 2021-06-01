@@ -1,27 +1,23 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Button, Menu, Text } from "react-native-paper";
-import { connect } from "react-redux";
-import { AnyAction } from "redux";
+import { useDispatch, useSelector } from "react-redux";
 import FilterButton from "../components/FilterButton";
 import ThesisList from "../components/ThesisList";
 import ViewContainer from "../components/ViewContainer";
 import { ALL_CATEGORIES, ALL_THESIS, THESIS_STATI } from "../shared/constants";
-import { setThesis } from "../shared/data/thesis";
+import { setAllThesis } from "../shared/data/thesis";
 import { getAllThesis } from "../shared/data/thesis/selectors";
 import { ICategory, IThesis, IThesisStatus, AppState } from "../shared/types";
 
-const ThesisOverview: React.FC<ThesisOverviewProps> = ({
-  allThesis,
-  setAllThesis,
-  navigation,
-}) => {
+const ThesisOverview: React.FC<ThesisOverviewProps> = ({ navigation }) => {
+  const dispatch = useDispatch();
+  const allThesis = useSelector<AppState, IThesis[]>(getAllThesis);
   const [thesisStatus] = React.useState<IThesisStatus[]>(THESIS_STATI);
   const [thesisCategories] = React.useState<ICategory[]>(ALL_CATEGORIES);
 
   React.useEffect(() => {
     // replace with real action when there
-    setAllThesis(ALL_THESIS);
+    dispatch(setAllThesis(ALL_THESIS));
   }, []);
 
   return (
@@ -39,25 +35,7 @@ type OwnProps = {
   navigation: any;
 };
 
-type DispatchProps = {
-  setAllThesis: (allThesis: IThesis[]) => void;
-};
-
-type StateProps = {
-  allThesis: IThesis[];
-};
-
-type ThesisOverviewProps = OwnProps & StateProps & DispatchProps;
-
-const mapDispatchToProps = (
-  dispatch: (action: AnyAction) => void
-): DispatchProps => ({
-  setAllThesis: (allThesis: IThesis[]) => dispatch(setThesis(allThesis)),
-});
-
-const mapStateToProps = (state: AppState): StateProps => ({
-  allThesis: getAllThesis(state),
-});
+type ThesisOverviewProps = OwnProps;
 
 const styles = StyleSheet.create({
   title: {
@@ -77,4 +55,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ThesisOverview);
+export default ThesisOverview;

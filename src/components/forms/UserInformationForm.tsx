@@ -1,34 +1,31 @@
 import React from "react";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { Controller, useForm } from "react-hook-form";
 import { View } from "react-native";
 import { Button } from "react-native-paper";
-import { AppDispatch, AppState, UserInfo } from "../../shared/types";
+import { AppState, UserInfo } from "../../shared/types";
 import FormField from "../FormField";
 import { getUserInfo } from "../../shared/data/auth/selectors";
 import { logoutUser, updateUser } from "../../shared/data/auth";
 
-type StateProps = {
-  userInfo: UserInfo;
-};
+const UserInformationForm: React.FC = () => {
+  const dispatch = useDispatch();
+  const userInfo = useSelector<AppState, UserInfo>(getUserInfo);
 
-type DispatchProps = {
-  update: (user: UserInfo) => void;
-  logout: () => void;
-};
-
-type UserInformationFormProps = StateProps & DispatchProps;
-
-const UserInformationForm: React.FC<UserInformationFormProps> = ({
-  userInfo,
-  update,
-  logout,
-}) => {
   const { control, handleSubmit } = useForm<UserInfo>({
     defaultValues: {
       ...userInfo,
     },
   });
+
+  const update = (user: UserInfo) => {
+    dispatch(updateUser(user));
+  };
+
+  const logout = () => {
+    dispatch(logoutUser());
+  };
+
   return (
     <View>
       <Controller
@@ -66,16 +63,4 @@ const UserInformationForm: React.FC<UserInformationFormProps> = ({
   );
 };
 
-const mapStateToProps = (state: AppState): StateProps => ({
-  userInfo: getUserInfo(state),
-});
-
-const mapDispatchToProps = (dispatch: AppDispatch): DispatchProps => ({
-  update: (user) => dispatch(updateUser(user)),
-  logout: () => dispatch(logoutUser()),
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(UserInformationForm);
+export default UserInformationForm;

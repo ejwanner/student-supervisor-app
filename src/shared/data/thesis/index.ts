@@ -1,34 +1,19 @@
-import { AnyAction } from "redux";
 import { IThesis, ThesisState } from "../../types";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export const SET_THESIS = "THESIS/SET_THESIS";
-
-interface SetThesis {
-  type: typeof SET_THESIS;
-  payload: IThesis[];
-}
-
-export type ThesisActions = SetThesis;
-
-const INITIAL_STATE: ThesisState = {
+const initialState: ThesisState = {
   allThesis: [],
 };
 
-export const setThesis = (thesis: IThesis[]): SetThesis => ({
-  type: SET_THESIS,
-  payload: thesis,
+const thesisSlice = createSlice({
+  name: "thesis",
+  initialState,
+  reducers: {
+    setAllThesis(state, action: PayloadAction<IThesis[]>) {
+      state.allThesis = action.payload;
+    },
+  },
 });
 
-const thesisReducer = (
-  state = INITIAL_STATE,
-  action: AnyAction
-): ThesisState => {
-  switch (action.type) {
-    case SET_THESIS:
-      return { ...state, allThesis: action.payload };
-    default:
-      return state;
-  }
-};
-
-export default thesisReducer;
+export const { setAllThesis } = thesisSlice.actions;
+export default thesisSlice.reducer;
