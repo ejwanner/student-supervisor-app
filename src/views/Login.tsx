@@ -10,16 +10,13 @@ type LoginProps = {
 };
 
 const Login: React.FC<LoginProps> = ({ navigation }) => {
-
   const navigateToRegister = () => {
     navigation.navigate("Register");
   };
   return (
     <ViewContainer>
-      <Text style={styles.title}>LOGIN</Text>
-      <SignInForm
-        navigateToRegister={navigateToRegister}
-      />
+      <Text style={styles.title}>Login</Text>
+      <SignInForm navigateToRegister={navigateToRegister} />
     </ViewContainer>
   );
 };

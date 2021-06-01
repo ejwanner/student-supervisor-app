@@ -1,53 +1,50 @@
-import { AnyAction } from "redux";
-import { AppDispatch, AuthState, UserInfo, UserLogin } from "../../types";
-import { loginUser } from "../../com";
-
-export const SET_TOKEN = "AUTH/SET_TOKEN";
-export const SET_USERINFO = "AUTH/SET_USERINFO";
-
-interface SetToken {
-  type: typeof SET_TOKEN;
-  payload: string | null;
-}
-
-interface SetUserInfo {
-  type: typeof SET_USERINFO;
-  payload: UserInfo | null;
-}
-
-export type AuthActions = SetToken | SetUserInfo;
-
-const INITIAL_STATE: AuthState = {
-  // token: 'd',
-  token: null,
-  userInfo: null,
-};
+import {
+  AppState,
+  AppDispatch,
+  AuthState,
+  UserInfo,
+  UserLogin,
+} from "../../types";
+import * as com from "../../com";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export const login = (user: UserLogin) => async (dispatch: AppDispatch) => {
-  return loginUser(user).then((res) =>
-    dispatch({ type: SET_TOKEN, payload: res.access_token })
-  );
+  return com.loginUser(user).then((res) => {
+    dispatch(setToken(res.access_token));
+    dispatch(setUserInfo(res.userInfo));
+  });
 };
 
-export const setToken = (token: string | null): SetToken => ({
-  type: SET_TOKEN,
-  payload: token,
-});
+export const updateUser =
+  (user: UserInfo) =>
+  async (dispatch: AppDispatch, getState: () => AppState) => {
+    const token = getState().auth.token || "";
+    return com
+      .updateUser(user, token)
+      .then((res) => dispatch(setUserInfo(res)));
+  };
 
-export const setUserInfo = (userInfo: UserInfo | null): SetUserInfo => ({
-  type: SET_USERINFO,
-  payload: userInfo,
-});
-
-const authReducer = (state = INITIAL_STATE, action: AnyAction): AuthState => {
-  switch (action.type) {
-    case SET_TOKEN:
-      return { ...state, token: action.payload };
-    case SET_USERINFO:
-      return { ...state, userInfo: action.payload };
-    default:
-      return state;
-  }
+const initialState: AuthState = {
+  token: null,
+  userInfo: { name: "", email: "", supervisor: false },
 };
 
-export default authReducer;
+const authSlice = createSlice({
+  name: "auth",
+  initialState,
+  reducers: {
+    setToken(state, action: PayloadAction<string>) {
+      state.token = action.payload;
+    },
+    setUserInfo(state, action: PayloadAction<UserInfo>) {
+      state.userInfo = action.payload;
+    },
+    logoutUser(state) {
+      state.token = null;
+    },
+  },
+});
+
+export const { setToken, setUserInfo, logoutUser } = authSlice.actions;
+
+export default authSlice.reducer;

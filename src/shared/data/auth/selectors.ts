@@ -1,12 +1,5 @@
-import { createSelector } from "@reduxjs/toolkit";
-import { AppState, UserInfo } from "../../types";
+import { AppState } from "../../types";
 
-export const getUserInfo = createSelector(
-  (state: AppState) => state.auth.userInfo,
-  (userInfo: UserInfo | null) => userInfo
-);
+export const getUserInfo = (state: AppState) => state.auth.userInfo;
 
-export const getToken = createSelector(
-  (state: AppState) => state.auth.token,
-  (token: string | null) => token
-);
+export const getToken = (state: AppState) => state.auth.token;

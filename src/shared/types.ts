@@ -25,20 +25,6 @@ export interface ICategory {
   name: string;
 }
 
-export interface IUser {
-  id?: number;
-  name: string;
-  email: string;
-  password: string;
-  number: string;
-  category: ICategory;
-}
-
-export interface UserSignIn {
-  username: string;
-  password: string;
-}
-
 export interface UserRegister {
   email: string;
   name: string;
@@ -68,5 +54,5 @@ export type ThesisState = {
 
 export type AuthState = {
   token: string | null;
-  userInfo: UserInfo | null;
+  userInfo: UserInfo;
 };

@@ -1,26 +1,31 @@
 import React from "react";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { Controller, useForm } from "react-hook-form";
 import { View } from "react-native";
 import { Button } from "react-native-paper";
-import { IUser } from "../../shared/types";
+import { AppState, UserInfo } from "../../shared/types";
 import FormField from "../FormField";
+import { getUserInfo } from "../../shared/data/auth/selectors";
+import { logoutUser, updateUser } from "../../shared/data/auth";
 
-type UserInformationFormProps = {
-  user: IUser;
-  onSubmit: (data: IUser) => void;
-};
+const UserInformationForm: React.FC = () => {
+  const dispatch = useDispatch();
+  const userInfo = useSelector<AppState, UserInfo>(getUserInfo);
 
-const UserInformationForm: React.FC<UserInformationFormProps> = ({
-  onSubmit,
-  user,
-}) => {
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit } = useForm<UserInfo>({
     defaultValues: {
-      username: user.username,
-      number: user.number,
-      category: user.category.name,
+      ...userInfo,
     },
   });
+
+  const update = (user: UserInfo) => {
+    dispatch(updateUser(user));
+  };
+
+  const logout = () => {
+    dispatch(logoutUser());
+  };
+
   return (
     <View>
       <Controller
@@ -33,7 +38,7 @@ const UserInformationForm: React.FC<UserInformationFormProps> = ({
             label="Username"
           />
         )}
-        name="username"
+        name="name"
       />
       <Controller
         control={control}
@@ -42,25 +47,18 @@ const UserInformationForm: React.FC<UserInformationFormProps> = ({
             onBlur={onBlur}
             onChange={(value) => onChange(value)}
             value={value}
-            label="Number"
+            label="E-Mail"
+            disabled
           />
         )}
-        name="number"
+        name="email"
       />
-      <Controller
-        control={control}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <FormField
-            onBlur={onBlur}
-            onChange={(value) => onChange(value)}
-            value={value}
-            label="Category"
-          />
-        )}
-        name="category"
-      />
-      <Button mode="outlined" onPress={handleSubmit(onSubmit)}>
+
+      <Button mode="contained" onPress={handleSubmit(update)}>
         Update user information
+      </Button>
+      <Button mode="outlined" onPress={logout} style={{ marginTop: 10 }}>
+        Logout
       </Button>
     </View>
   );
