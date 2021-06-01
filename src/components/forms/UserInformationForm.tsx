@@ -48,6 +48,7 @@ const UserInformationForm: React.FC = () => {
             onChange={(value) => onChange(value)}
             value={value}
             label="E-Mail"
+            disabled
           />
         )}
         name="email"

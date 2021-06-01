@@ -54,6 +54,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
             onChange={(value) => onChange(value)}
             value={value}
             label="Password"
+            secureTextEntry
           />
         )}
         name="password"

@@ -43,6 +43,7 @@ const SignInForm: React.FC<SignInFormProps> = ({ navigateToRegister }) => {
             onChange={(value) => onChange(value)}
             value={value}
             label="Password"
+            secureTextEntry
           />
         )}
         name="password"

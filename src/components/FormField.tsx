@@ -7,6 +7,8 @@ type FormFieldProps = {
   value: string;
   onBlur: () => void;
   onChange: (text: string) => void;
+  disabled?: boolean;
+  secureTextEntry?: boolean;
 };
 
 const FormField: React.FC<FormFieldProps> = ({
@@ -14,6 +16,8 @@ const FormField: React.FC<FormFieldProps> = ({
   value,
   onBlur,
   onChange,
+  disabled,
+  secureTextEntry,
 }) => {
   return (
     <TextInput
@@ -23,7 +27,9 @@ const FormField: React.FC<FormFieldProps> = ({
       onBlur={onBlur}
       onChangeText={onChange}
       value={value}
-      autoCapitalize='none'
+      autoCapitalize="none"
+      disabled={disabled}
+      secureTextEntry={secureTextEntry}
     />
   );
 };
