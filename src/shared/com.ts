@@ -1,7 +1,7 @@
 import Axios, { AxiosResponse, AxiosRequestConfig } from "axios";
 import { UserInfo, UserLogin, UserRegister } from "./types";
 
-const API_URL = "http://localhost:8000";
+const API_URL = "http://localhost:8000/api";
 
 const parseJson = (res: AxiosResponse) => res.data;
 const throwError = (err: Error) => {
