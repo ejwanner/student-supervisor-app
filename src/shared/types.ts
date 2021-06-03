@@ -1,11 +1,11 @@
 import { ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
 
-export interface IThesis {
+export interface Thesis {
   id: number;
   title: string;
   description: string;
-  status: number;
+  status: ThesisStatus;
   category: number;
 
   // will be added later
@@ -13,6 +13,13 @@ export interface IThesis {
   supervisor?: null;
   second_supervisor?: null;
   created_by?: null;
+}
+
+export enum ThesisStatus {
+  Draft = "Draft",
+  Writing = "Writing",
+  Submitted = "Submitted",
+  Billed = "Billed",
 }
 
 export interface IThesisStatus {
@@ -49,7 +56,8 @@ export type AppState = {
 };
 
 export type ThesisState = {
-  allThesis: IThesis[];
+  allThesis: Thesis[];
+  myThesis: Thesis[];
 };
 
 export type AuthState = {

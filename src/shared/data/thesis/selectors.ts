@@ -1,4 +1,4 @@
-import { AppState, IThesis } from "../../types";
+import { AppState, Thesis } from "../../types";
 
-export const getAllThesis = (state: AppState): IThesis[] =>
+export const getAllThesis = (state: AppState): Thesis[] =>
   state.thesis.allThesis;

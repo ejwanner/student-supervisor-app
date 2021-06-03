@@ -1,15 +1,15 @@
 import Axios, { AxiosResponse, AxiosRequestConfig } from "axios";
-import { UserInfo, UserLogin, UserRegister } from "./types";
+import { Thesis, UserInfo, UserLogin, UserRegister } from "./types";
 
 const API_URL = "http://localhost:8000";
 
-const parseJson = (res: AxiosResponse) => res.data;
+const parseBody = (res: AxiosResponse) => res.data;
 const throwError = (err: Error) => {
   console.error(err);
   throw err;
 };
 
-const getAuthorizedHeader = (token: string): AxiosRequestConfig => ({
+const getAuthorizedHeader = (token: string | null): AxiosRequestConfig => ({
   headers: {
     Authorization: `Bearer ${token}`,
   },
@@ -17,26 +17,50 @@ const getAuthorizedHeader = (token: string): AxiosRequestConfig => ({
 
 export const registerUser = (newUser: UserRegister): Promise<void> => {
   return Axios.post(`${API_URL}/register`, newUser)
-    .then(parseJson)
+    .then(parseBody)
     .catch(throwError);
 };
 
-export const loginUser = (
+export const loginUser = async (
   user: UserLogin
 ): Promise<{ userInfo: UserInfo; access_token: string }> => {
   return Axios.post(`${API_URL}/login`, {
     email: user.email,
     password: user.password,
   })
-    .then(parseJson)
+    .then(parseBody)
     .catch(throwError);
 };
 
-export const updateUser = (
+export const updateUser = async (
   user: UserInfo,
   token: string
 ): Promise<UserInfo> => {
   return Axios.put(`${API_URL}/user`, user, getAuthorizedHeader(token))
-    .then(parseJson)
+    .then(parseBody)
+    .catch(throwError);
+};
+
+export const getAllThesis = async (token: string | null) => {
+  return Axios.get(`${API_URL}/thesis`, getAuthorizedHeader(token))
+    .then(parseBody)
+    .catch(throwError);
+};
+
+export const getThesisForUser = async (token: string | null) => {
+  return Axios.get(`${API_URL}/thesis/user`, getAuthorizedHeader(token))
+    .then(parseBody)
+    .catch(throwError);
+};
+
+export const createThesis = async (thesis: Thesis, token: string | null) => {
+  return Axios.post(`${API_URL}/thesis`, thesis, getAuthorizedHeader(token))
+    .then(parseBody)
+    .catch(throwError);
+};
+
+export const updateThesis = async (thesis: Thesis, token: string | null) => {
+  return Axios.put(`${API_URL}/thesis`, thesis, getAuthorizedHeader(token))
+    .then(parseBody)
     .catch(throwError);
 };
