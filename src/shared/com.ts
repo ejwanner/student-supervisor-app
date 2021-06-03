@@ -1,5 +1,5 @@
 import Axios, { AxiosResponse, AxiosRequestConfig } from "axios";
-import { Thesis, UserInfo, UserLogin, UserRegister } from "./types";
+import { Category, Thesis, UserInfo, UserLogin, UserRegister } from "./types";
 
 const API_URL = "http://localhost:8000/api";
 
@@ -41,13 +41,13 @@ export const updateUser = async (
     .catch(throwError);
 };
 
-export const getAllThesis = async (token: string | null) => {
+export const fetchThesis = async (token: string | null) => {
   return Axios.get(`${API_URL}/thesis`, getAuthorizedHeader(token))
     .then(parseBody)
     .catch(throwError);
 };
 
-export const getThesisForUser = async (token: string | null) => {
+export const fetchThesisForUser = async (token: string | null) => {
   return Axios.get(`${API_URL}/thesis/user`, getAuthorizedHeader(token))
     .then(parseBody)
     .catch(throwError);
@@ -61,6 +61,21 @@ export const createThesis = async (thesis: Thesis, token: string | null) => {
 
 export const updateThesis = async (thesis: Thesis, token: string | null) => {
   return Axios.put(`${API_URL}/thesis`, thesis, getAuthorizedHeader(token))
+    .then(parseBody)
+    .catch(throwError);
+};
+
+export const fetchCategories = async (token: string | null) => {
+  return Axios.get(`${API_URL}/category`, getAuthorizedHeader(token))
+    .then(parseBody)
+    .catch(throwError);
+};
+
+export const createCategory = async (
+  category: Category,
+  token: string | null
+) => {
+  return Axios.post(`${API_URL}/category`, getAuthorizedHeader(token))
     .then(parseBody)
     .catch(throwError);
 };

@@ -27,8 +27,8 @@ export interface IThesisStatus {
   name: string;
 }
 
-export interface ICategory {
-  id: number;
+export interface Category {
+  _id: string;
   name: string;
 }
 
@@ -53,6 +53,7 @@ export type AppDispatch = ThunkDispatch<AppState, unknown, AnyAction>;
 export type AppState = {
   thesis: ThesisState;
   auth: AuthState;
+  category: CategoryState;
 };
 
 export type ThesisState = {
@@ -63,4 +64,8 @@ export type ThesisState = {
 export type AuthState = {
   token: string | null;
   userInfo: UserInfo;
+};
+
+export type CategoryState = {
+  allCategories: Category[];
 };

@@ -1,4 +1,4 @@
-import { ICategory, Thesis, IThesisStatus, IUser, UserRegister } from "./types";
+import { Category, Thesis, IThesisStatus, IUser, UserRegister } from "./types";
 
 export const THESIS_STATI: IThesisStatus[] = [
   { id: 1, name: "None" },
@@ -9,7 +9,7 @@ export const THESIS_STATI: IThesisStatus[] = [
   { id: 6, name: "Paid" },
 ];
 
-export const ALL_CATEGORIES: ICategory[] = [
+export const ALL_CATEGORIES: Category[] = [
   { id: 1, name: "Software Development" },
 ];
 
