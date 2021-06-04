@@ -24,9 +24,16 @@ export const updateUser =
       .then((res) => dispatch(setUserInfo(res)));
   };
 
+export const fetchAllUsers =
+  () => async (dispatch: AppDispatch, getState: () => AppState) => {
+    const token = getState().auth.token || "";
+    return com.fetchAllUsers(token).then((res) => dispatch(setAllUsers(res)));
+  };
+
 const initialState: AuthState = {
   token: null,
   userInfo: { name: "", email: "", supervisor: false },
+  allUsers: [],
 };
 
 const authSlice = createSlice({
@@ -42,9 +49,13 @@ const authSlice = createSlice({
     logoutUser(state) {
       state.token = null;
     },
+    setAllUsers(state, action: PayloadAction<UserInfo[]>) {
+      state.allUsers = action.payload;
+    },
   },
 });
 
-export const { setToken, setUserInfo, logoutUser } = authSlice.actions;
+export const { setToken, setUserInfo, logoutUser, setAllUsers } =
+  authSlice.actions;
 
 export default authSlice.reducer;

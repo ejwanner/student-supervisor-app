@@ -35,9 +35,16 @@ export interface UserRegister {
 export type UserLogin = Omit<UserRegister, "supervisor" | "name">;
 
 export interface UserInfo {
+  _id?: string;
   name: string;
   email: string;
   supervisor: boolean;
+}
+
+export interface Conversation {
+  id?: string;
+  owner: UserInfo;
+  participant: UserInfo;
 }
 
 // redux types
@@ -46,6 +53,7 @@ export type AppDispatch = ThunkDispatch<AppState, unknown, AnyAction>;
 export type AppState = {
   thesis: ThesisState;
   auth: AuthState;
+  chat: ChatState;
 };
 
 export type ThesisState = {
@@ -55,4 +63,9 @@ export type ThesisState = {
 export type AuthState = {
   token: string | null;
   userInfo: UserInfo;
+  allUsers: UserInfo[];
+};
+
+export type ChatState = {
+  myConversations: Conversation[];
 };

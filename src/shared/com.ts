@@ -1,7 +1,7 @@
 import Axios, { AxiosResponse, AxiosRequestConfig } from "axios";
-import { UserInfo, UserLogin, UserRegister } from "./types";
+import { Conversation, UserInfo, UserLogin, UserRegister } from "./types";
 
-const API_URL = "http://localhost:8000/api";
+export const API_URL = "http://localhost:8000/api";
 
 const parseJson = (res: AxiosResponse) => res.data;
 const throwError = (err: Error) => {
@@ -37,6 +37,33 @@ export const updateUser = (
   token: string
 ): Promise<UserInfo> => {
   return Axios.put(`${API_URL}/user`, user, getAuthorizedHeader(token))
+    .then(parseJson)
+    .catch(throwError);
+};
+
+export const fetchAllUsers = (token: string): Promise<UserInfo[]> => {
+  return Axios.get(`${API_URL}/users`, getAuthorizedHeader(token))
+    .then(parseJson)
+    .catch(throwError);
+};
+
+export const fetchAllConversations = (
+  token: string
+): Promise<Conversation[]> => {
+  return Axios.get(`${API_URL}/chat/conversation`, getAuthorizedHeader(token))
+    .then(parseJson)
+    .catch(throwError);
+};
+
+export const createConversation = (
+  newConversation: Conversation,
+  token: string
+): Promise<Conversation> => {
+  return Axios.post(
+    `${API_URL}/chat/conversation/create`,
+    newConversation,
+    getAuthorizedHeader(token)
+  )
     .then(parseJson)
     .catch(throwError);
 };
