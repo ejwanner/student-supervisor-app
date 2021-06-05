@@ -1,6 +1,6 @@
 import React from "react";
 import ViewContainer from "../components/ViewContainer";
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { IconButton, Text, TextInput } from "react-native-paper";
 import { useSelector } from "react-redux";
 import {
@@ -10,10 +10,15 @@ import {
 import { AppState, Conversation, Message, UserInfo } from "../shared/types";
 import { sendMessage } from "../shared/websocket";
 import { getUserInfo } from "../shared/data/auth/selectors";
+import { useIsFocused } from "@react-navigation/native";
 
-type MessengerProps = {};
+type MessengerProps = {
+  navigation: any;
+};
 
-const Messenger: React.FC<MessengerProps> = () => {
+const Messenger: React.FC<MessengerProps> = ({ navigation }) => {
+  const scrollViewRef = React.useRef<any>();
+  const isFocused = useIsFocused();
   const activeConversation = useSelector<AppState, Conversation | null>(
     getActiveConversation
   );
@@ -23,6 +28,12 @@ const Messenger: React.FC<MessengerProps> = () => {
   const conversationMessages = useSelector<AppState, Message[]>(
     getMessagesByConversation
   );
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      scrollViewRef.current.scrollToEnd({ animated: true });
+    }, 200);
+  }, [conversationMessages, isFocused]);
 
   const send = () => {
     if (activeConversation && message.length > 0) {
@@ -38,23 +49,25 @@ const Messenger: React.FC<MessengerProps> = () => {
   return (
     <ViewContainer>
       <View style={styles.wrapper}>
-        <View>
-          {conversationMessages.map((mes, index) => (
-            <View
-              key={`message-${activeConversation?._id}-${mes._id}`}
-              style={
-                mes.createdBy._id === user._id ? styles.sent : styles.received
-              }
-            >
-              <Text
-                style={{
-                  color: mes.createdBy._id === user._id ? "#fff" : "#000",
-                }}
+        <View style={{ height: "85%" }}>
+          <ScrollView ref={scrollViewRef}>
+            {conversationMessages.map((mes, index) => (
+              <View
+                key={`message-${activeConversation?._id}-${mes._id}`}
+                style={
+                  mes.createdBy._id === user._id ? styles.sent : styles.received
+                }
               >
-                {mes.message}
-              </Text>
-            </View>
-          ))}
+                <Text
+                  style={{
+                    color: mes.createdBy._id === user._id ? "#fff" : "#000",
+                  }}
+                >
+                  {mes.message}
+                </Text>
+              </View>
+            ))}
+          </ScrollView>
         </View>
         <View style={styles.messageBar}>
           <TextInput
