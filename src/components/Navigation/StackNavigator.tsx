@@ -8,6 +8,7 @@ import Settings from "../../views/Settings";
 import ThesisDetail from "../../views/ThesisDetail";
 import Chat from "../../views/Chat";
 import UserList from "../../views/UserList";
+import Messenger from "../../views/Messenger";
 
 const Stack = createStackNavigator();
 
@@ -56,6 +57,7 @@ export const ChatStackNavigator: React.FC = () => {
     <StackNavigator>
       <Stack.Screen name="Chat" component={Chat} />
       <Stack.Screen name="User List" component={UserList} />
+      <Stack.Screen name="Messenger" component={Messenger} />
     </StackNavigator>
   );
 };

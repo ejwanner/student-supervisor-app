@@ -16,7 +16,11 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { getUserInfo } from "../shared/data/auth/selectors";
 import { AppState, Conversation, UserInfo } from "../shared/types";
-import { fetchAllConversations } from "../shared/data/chat";
+import {
+  fetchAllConversations,
+  fetchMessages,
+  setActiveConversation,
+} from "../shared/data/chat";
 import { StyleSheet, View } from "react-native";
 import { getMyConversations } from "../shared/data/chat/selectors";
 
@@ -32,15 +36,14 @@ const Chat: React.FC<ChatProps> = ({ navigation }) => {
 
   React.useEffect(() => {
     dispatch(fetchAllConversations());
+    dispatch(fetchMessages());
     dispatch(startSocketIO());
     return () => disconnectSocket();
   }, [dispatch]);
 
-  const send = () => {
-    sendMessage({
-      message: "Hallo",
-      conversation: "60ba519115c00e5bb1fa954b",
-    });
+  const openConversation = (conv: Conversation) => {
+    dispatch(setActiveConversation(conv));
+    navigation.navigate("Messenger");
   };
 
   return (
@@ -57,20 +60,23 @@ const Chat: React.FC<ChatProps> = ({ navigation }) => {
         myConversations.map((conv, index) => (
           <View key={`chat-list-item-${index}`}>
             <List.Item
-              title={conv.participant.name}
+              title={
+                conv.participant._id === user._id
+                  ? conv.owner.name
+                  : conv.participant.name
+              }
               right={(props) => (
                 <IconButton
                   key={`chat-list-btn-${index}`}
                   icon="message"
                   size={20}
-                  onPress={() => navigation.navigate("Chat")}
+                  onPress={() => openConversation(conv)}
                 />
               )}
             />
             <Divider />
           </View>
         ))}
-      <Button onPress={send}>Send</Button>
     </ViewContainer>
   );
 };

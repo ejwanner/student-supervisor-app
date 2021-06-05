@@ -42,9 +42,17 @@ export interface UserInfo {
 }
 
 export interface Conversation {
-  id?: string;
+  _id?: string;
   owner: UserInfo;
   participant: UserInfo;
+}
+
+export interface Message {
+  _id?: string;
+  conversation: Conversation;
+  message: string;
+  timestamp?: Date;
+  createdBy: UserInfo;
 }
 
 // redux types
@@ -68,4 +76,6 @@ export type AuthState = {
 
 export type ChatState = {
   myConversations: Conversation[];
+  activeConversation: Conversation | null;
+  myMessages: Message[];
 };

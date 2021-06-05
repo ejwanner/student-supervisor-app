@@ -1,5 +1,11 @@
 import Axios, { AxiosResponse, AxiosRequestConfig } from "axios";
-import { Conversation, UserInfo, UserLogin, UserRegister } from "./types";
+import {
+  Conversation,
+  Message,
+  UserInfo,
+  UserLogin,
+  UserRegister,
+} from "./types";
 
 export const API_URL = "http://localhost:8000/api";
 
@@ -51,6 +57,12 @@ export const fetchAllConversations = (
   token: string
 ): Promise<Conversation[]> => {
   return Axios.get(`${API_URL}/chat/conversation`, getAuthorizedHeader(token))
+    .then(parseJson)
+    .catch(throwError);
+};
+
+export const fetchMessages = (token: string): Promise<Message[]> => {
+  return Axios.get(`${API_URL}/chat/message`, getAuthorizedHeader(token))
     .then(parseJson)
     .catch(throwError);
 };

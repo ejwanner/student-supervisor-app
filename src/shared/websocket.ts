@@ -1,5 +1,10 @@
 import io, { Socket } from "socket.io-client";
-import { AppDispatch, AppState, UserInfo } from "./types";
+import { AppDispatch, AppState, Message, UserInfo } from "./types";
+import {
+  fetchAllConversations,
+  fetchMessages,
+  receiveMessage,
+} from "./data/chat";
 let socket: Socket;
 
 export const disconnectSocket = () => {
@@ -7,8 +12,8 @@ export const disconnectSocket = () => {
   if (socket) socket.disconnect();
 };
 
-export const sendMessage = (message: any) => {
-  socket.emit("msgToServer", { ...message });
+export const sendMessage = (message: Message) => {
+  socket.emit("msgToServer", message);
 };
 
 export const startSocketIO =
@@ -36,7 +41,9 @@ export const startSocketIO =
       console.log("connection to server lost.");
     });
 
-    socket.on("msgToClient", (message) => {
-      console.log("msg", message);
+    socket.on(`receive-${getState().auth.userInfo._id}`, (message: Message) => {
+      dispatch(receiveMessage(message));
+      dispatch(fetchMessages());
+      dispatch(fetchAllConversations());
     });
   };
