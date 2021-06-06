@@ -32,6 +32,11 @@ export interface Category {
   name: string;
 }
 
+export interface Status {
+  _id: string;
+  name: string;
+}
+
 export interface UserRegister {
   email: string;
   name: string;
@@ -54,6 +59,7 @@ export type AppState = {
   thesis: ThesisState;
   auth: AuthState;
   category: CategoryState;
+  status: StatusState;
 };
 
 export type ThesisState = {
@@ -68,4 +74,10 @@ export type AuthState = {
 
 export type CategoryState = {
   allCategories: Category[];
+  filterCategory: Category | null;
+};
+
+export type StatusState = {
+  allStatus: Status[];
+  filterStatus: Status | null;
 };

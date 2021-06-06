@@ -19,6 +19,8 @@ const styles = StyleSheet.create({
   },
   pageContent: {
     padding: 24,
+    paddingBottom: 0,
+    height: "100%",
   },
 });
 

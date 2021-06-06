@@ -79,3 +79,9 @@ export const createCategory = async (
     .then(parseBody)
     .catch(throwError);
 };
+
+export const fetchStatus = async (token: string | null) => {
+  return Axios.get(`${API_URL}/status`, getAuthorizedHeader(token))
+    .then(parseBody)
+    .catch(throwError);
+};

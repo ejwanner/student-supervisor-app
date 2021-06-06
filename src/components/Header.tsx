@@ -1,13 +1,19 @@
 import React from "react";
-import { Appbar } from "react-native-paper";
+import { Appbar, withTheme } from "react-native-paper";
 
 type HeaderProps = {
   scene: any;
   previous: any;
   navigation: any;
+  theme: any;
 };
 
-const Header: React.FC<HeaderProps> = ({ scene, previous, navigation }) => {
+const Header: React.FC<HeaderProps> = ({
+  scene,
+  previous,
+  navigation,
+  theme,
+}) => {
   const { options } = scene.descriptor;
   const title =
     options.headerTitle !== undefined
@@ -16,7 +22,7 @@ const Header: React.FC<HeaderProps> = ({ scene, previous, navigation }) => {
       ? options.title
       : scene.route.name;
   return (
-    <Appbar.Header>
+    <Appbar.Header theme={{ colors: { primary: "#fff" } }}>
       {previous && (
         <Appbar.BackAction
           onPress={() => navigation.navigate(previous.route.name)}
@@ -27,4 +33,4 @@ const Header: React.FC<HeaderProps> = ({ scene, previous, navigation }) => {
   );
 };
 
-export default Header;
+export default withTheme(Header);
