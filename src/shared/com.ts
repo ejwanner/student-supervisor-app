@@ -1,7 +1,15 @@
 import Axios, { AxiosResponse, AxiosRequestConfig } from "axios";
-import { Category, Thesis, UserInfo, UserLogin, UserRegister } from "./types";
+import {
+  Conversation,
+  Message,
+  Thesis,
+  Category,
+  UserInfo,
+  UserLogin,
+  UserRegister,
+} from "./types";
 
-const API_URL = "http://localhost:8000/api";
+export const API_URL = "http://localhost:8000/api";
 
 const parseBody = (res: AxiosResponse) => res.data;
 const throwError = (err: Error) => {
@@ -82,6 +90,39 @@ export const createCategory = async (
 
 export const fetchStatus = async (token: string | null) => {
   return Axios.get(`${API_URL}/status`, getAuthorizedHeader(token))
+    .then(parseBody)
+    .catch(throwError);
+};
+
+export const fetchAllUsers = (token: string): Promise<UserInfo[]> => {
+  return Axios.get(`${API_URL}/users`, getAuthorizedHeader(token))
+    .then(parseBody)
+    .catch(throwError);
+};
+
+export const fetchAllConversations = (
+  token: string
+): Promise<Conversation[]> => {
+  return Axios.get(`${API_URL}/chat/conversation`, getAuthorizedHeader(token))
+    .then(parseBody)
+    .catch(throwError);
+};
+
+export const fetchMessages = (token: string): Promise<Message[]> => {
+  return Axios.get(`${API_URL}/chat/message`, getAuthorizedHeader(token))
+    .then(parseBody)
+    .catch(throwError);
+};
+
+export const createConversation = (
+  newConversation: Conversation,
+  token: string
+): Promise<Conversation> => {
+  return Axios.post(
+    `${API_URL}/chat/conversation/create`,
+    newConversation,
+    getAuthorizedHeader(token)
+  )
     .then(parseBody)
     .catch(throwError);
 };

@@ -6,6 +6,9 @@ import ThesisOverview from "../../views/ThesisOverview";
 import Header from "../Header";
 import Settings from "../../views/Settings";
 import ThesisDetail from "../../views/ThesisDetail";
+import Chat from "../../views/Chat";
+import UserList from "../../views/UserList";
+import Messenger from "../../views/Messenger";
 import Filter from "../../views/Filter";
 
 const Stack = createStackNavigator();
@@ -47,6 +50,16 @@ export const SettingsStackNavigator: React.FC = () => {
   return (
     <StackNavigator>
       <Stack.Screen name="Settings" component={Settings} />
+    </StackNavigator>
+  );
+};
+
+export const ChatStackNavigator: React.FC = () => {
+  return (
+    <StackNavigator>
+      <Stack.Screen name="Chat" component={Chat} />
+      <Stack.Screen name="User List" component={UserList} />
+      <Stack.Screen name="Messenger" component={Messenger} />
     </StackNavigator>
   );
 };

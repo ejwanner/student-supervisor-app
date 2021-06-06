@@ -77,7 +77,7 @@ const Filter: React.FC<FilterProps> = ({ navigation }) => {
                 />
               )}
             />
-            <Divider />
+            <Divider key={`divider-${status._id}`} />
           </>
         ))}
         <List.Section style={{ marginTop: 18 }}>
@@ -113,7 +113,7 @@ const Filter: React.FC<FilterProps> = ({ navigation }) => {
                 />
               )}
             />
-            <Divider />
+            <Divider key={`divider-${category._id}`} />
           </>
         ))}
         <Button

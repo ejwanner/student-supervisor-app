@@ -1,8 +1,9 @@
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import React from "react";
 import {
-  SettingsStackNavigator,
-  ThesisOverviewStackNavigator,
+    ChatStackNavigator,
+    SettingsStackNavigator,
+    ThesisOverviewStackNavigator,
 } from "./StackNavigator";
 
 const Tab = createMaterialBottomTabNavigator();
@@ -20,6 +21,13 @@ export const BottomTabs = () => {
         options={{
           tabBarIcon: "book",
         }}
+      />
+      <Tab.Screen
+          name="Messages"
+          component={ChatStackNavigator}
+          options={{
+            tabBarIcon: "message",
+          }}
       />
       <Tab.Screen
         name="Settings"

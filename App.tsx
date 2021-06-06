@@ -11,6 +11,7 @@ const theme = {
   colors: {
     ...DefaultTheme.colors,
     primary: "#007aff",
+    accent: "rgb(255, 167, 58)",
     card: "",
     border: "",
   },
