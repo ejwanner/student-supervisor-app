@@ -9,6 +9,7 @@ import ThesisDetail from "../../views/ThesisDetail";
 import Chat from "../../views/Chat";
 import UserList from "../../views/UserList";
 import Messenger from "../../views/Messenger";
+import Filter from "../../views/Filter";
 
 const Stack = createStackNavigator();
 
@@ -39,6 +40,7 @@ export const ThesisOverviewStackNavigator: React.FC = () => {
   return (
     <StackNavigator>
       <Stack.Screen name="Thesis Overview" component={ThesisOverview} />
+      <Stack.Screen name="Filter" component={Filter} />
       <Stack.Screen name="Thesis Detail" component={ThesisDetail} />
     </StackNavigator>
   );

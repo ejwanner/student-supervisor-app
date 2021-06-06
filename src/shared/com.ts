@@ -2,6 +2,8 @@ import Axios, { AxiosResponse, AxiosRequestConfig } from "axios";
 import {
   Conversation,
   Message,
+  Thesis,
+  Category,
   UserInfo,
   UserLogin,
   UserRegister,
@@ -9,13 +11,13 @@ import {
 
 export const API_URL = "http://localhost:8000/api";
 
-const parseJson = (res: AxiosResponse) => res.data;
+const parseBody = (res: AxiosResponse) => res.data;
 const throwError = (err: Error) => {
   console.error(err);
   throw err;
 };
 
-const getAuthorizedHeader = (token: string): AxiosRequestConfig => ({
+const getAuthorizedHeader = (token: string | null): AxiosRequestConfig => ({
   headers: {
     Authorization: `Bearer ${token}`,
   },
@@ -23,33 +25,78 @@ const getAuthorizedHeader = (token: string): AxiosRequestConfig => ({
 
 export const registerUser = (newUser: UserRegister): Promise<void> => {
   return Axios.post(`${API_URL}/register`, newUser)
-    .then(parseJson)
+    .then(parseBody)
     .catch(throwError);
 };
 
-export const loginUser = (
+export const loginUser = async (
   user: UserLogin
 ): Promise<{ userInfo: UserInfo; access_token: string }> => {
   return Axios.post(`${API_URL}/login`, {
     email: user.email,
     password: user.password,
   })
-    .then(parseJson)
+    .then(parseBody)
     .catch(throwError);
 };
 
-export const updateUser = (
+export const updateUser = async (
   user: UserInfo,
   token: string
 ): Promise<UserInfo> => {
   return Axios.put(`${API_URL}/user`, user, getAuthorizedHeader(token))
-    .then(parseJson)
+    .then(parseBody)
+    .catch(throwError);
+};
+
+export const fetchThesis = async (token: string | null) => {
+  return Axios.get(`${API_URL}/thesis`, getAuthorizedHeader(token))
+    .then(parseBody)
+    .catch(throwError);
+};
+
+export const fetchThesisForUser = async (token: string | null) => {
+  return Axios.get(`${API_URL}/thesis/user`, getAuthorizedHeader(token))
+    .then(parseBody)
+    .catch(throwError);
+};
+
+export const createThesis = async (thesis: Thesis, token: string | null) => {
+  return Axios.post(`${API_URL}/thesis`, thesis, getAuthorizedHeader(token))
+    .then(parseBody)
+    .catch(throwError);
+};
+
+export const updateThesis = async (thesis: Thesis, token: string | null) => {
+  return Axios.put(`${API_URL}/thesis`, thesis, getAuthorizedHeader(token))
+    .then(parseBody)
+    .catch(throwError);
+};
+
+export const fetchCategories = async (token: string | null) => {
+  return Axios.get(`${API_URL}/category`, getAuthorizedHeader(token))
+    .then(parseBody)
+    .catch(throwError);
+};
+
+export const createCategory = async (
+  category: Category,
+  token: string | null
+) => {
+  return Axios.post(`${API_URL}/category`, getAuthorizedHeader(token))
+    .then(parseBody)
+    .catch(throwError);
+};
+
+export const fetchStatus = async (token: string | null) => {
+  return Axios.get(`${API_URL}/status`, getAuthorizedHeader(token))
+    .then(parseBody)
     .catch(throwError);
 };
 
 export const fetchAllUsers = (token: string): Promise<UserInfo[]> => {
   return Axios.get(`${API_URL}/users`, getAuthorizedHeader(token))
-    .then(parseJson)
+    .then(parseBody)
     .catch(throwError);
 };
 
@@ -57,13 +104,13 @@ export const fetchAllConversations = (
   token: string
 ): Promise<Conversation[]> => {
   return Axios.get(`${API_URL}/chat/conversation`, getAuthorizedHeader(token))
-    .then(parseJson)
+    .then(parseBody)
     .catch(throwError);
 };
 
 export const fetchMessages = (token: string): Promise<Message[]> => {
   return Axios.get(`${API_URL}/chat/message`, getAuthorizedHeader(token))
-    .then(parseJson)
+    .then(parseBody)
     .catch(throwError);
 };
 
@@ -76,6 +123,6 @@ export const createConversation = (
     newConversation,
     getAuthorizedHeader(token)
   )
-    .then(parseJson)
+    .then(parseBody)
     .catch(throwError);
 };

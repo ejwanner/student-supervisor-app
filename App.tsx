@@ -7,8 +7,10 @@ import NavigationContainer from "./src/components/Navigation/NavigationContainer
 
 const theme = {
   ...DefaultTheme,
+  roundness: 2,
   colors: {
     ...DefaultTheme.colors,
+    primary: "#007aff",
     card: "",
     border: "",
   },
