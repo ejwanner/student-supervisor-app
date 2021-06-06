@@ -1,10 +1,10 @@
 import React from "react";
 import { View } from "react-native";
 import { Divider, IconButton, List } from "react-native-paper";
-import { IThesis } from "../shared/types";
+import { Thesis } from "../shared/types";
 
 type ThesisListProps = {
-  thesisItems: IThesis[];
+  thesisItems: Thesis[];
   navigation: any;
 };
 
@@ -12,7 +12,7 @@ const ThesisList: React.FC<ThesisListProps> = ({ thesisItems, navigation }) => {
   return (
     <>
       {thesisItems &&
-        thesisItems.map((thesisItem: IThesis, index: number) => (
+        thesisItems.map((thesisItem: Thesis, index: number) => (
           <View key={`thesis-list-item-${index}`}>
             <List.Item
               title={thesisItem.title}
