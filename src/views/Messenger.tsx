@@ -106,9 +106,7 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
     paddingRight: 12,
     borderRadius: 20,
-    borderWidth: 2,
-    borderStyle: "solid",
-    borderColor: "#6200ee",
+    backgroundColor: "rgb(255, 167, 58)",
   },
   sent: {
     alignSelf: "flex-end",
@@ -118,7 +116,7 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
     paddingRight: 12,
     borderRadius: 20,
-    backgroundColor: "#6200ee",
+    backgroundColor: "#007aff",
   },
 });
 export default Messenger;
