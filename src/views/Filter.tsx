@@ -118,7 +118,7 @@ const Filter: React.FC<FilterProps> = ({ navigation }) => {
         ))}
         <Button
           mode="contained"
-          style={{ marginTop: 24 }}
+          style={{ marginTop: 24, marginBottom: 24 }}
           onPress={() => navigation.navigate("Thesis Overview")}
         >
           Apply Filters
