@@ -2,17 +2,17 @@ import { ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
 
 export interface Thesis {
-  id: number;
+  id: number; // muss ein string sein
   title: string;
   description: string;
   status: ThesisStatus;
-  category: number;
+  category: number; //muss ein string sein
 
   // will be added later
   student?: null;
   supervisor?: null;
   second_supervisor?: null;
-  created_by?: null;
+  created_by?: null; //braucht man nicht??
 }
 
 export enum ThesisStatus {
@@ -41,7 +41,9 @@ export interface UserRegister {
   email: string;
   name: string;
   password: string;
+  category: string;
   supervisor: boolean;
+  preferredCategory: string;
 }
 
 export type UserLogin = Omit<UserRegister, "supervisor" | "name">;

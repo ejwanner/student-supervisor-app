@@ -1,21 +1,35 @@
-import React from "react";
+import React, {useState} from "react";
 import { Controller, useForm } from "react-hook-form";
 import { StyleSheet, View } from "react-native";
+import DropDownPicker from 'react-native-dropdown-picker';
 import { Button, Checkbox } from "react-native-paper";
-import { UserRegister } from "../../shared/types";
+import {AppState, Category, UserRegister} from "../../shared/types";
 import FormField from "../FormField";
+import {useSelector} from "react-redux";
+import {getAllCategories} from "../../shared/data/category/selectors";
 
 type RegisterFormProps = {
   onSubmit: (data: UserRegister) => void;
 };
 
 const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
+    const allCategories = useSelector<AppState, Category[]>(getAllCategories);
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState(null);
+    const [items, setItems] = useState([
+        {label: 'Informatik', value: 'Informatik'},
+        {label: 'Recht', value: 'Recht'},
+        {label: 'Design', value: 'Design'},
+        {label: 'Wirtschaftsinformatik', value: 'Wirtschaftsinformatik'}
+
+    ]);
   const { control, handleSubmit } = useForm<UserRegister>({
     defaultValues: {
       name: "",
       email: "",
       password: "",
       supervisor: false,
+        preferredCategory: "Informatik"
     } as UserRegister,
   });
   const [checked, setChecked] = React.useState(false);
@@ -59,6 +73,23 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
         )}
         name="password"
       />
+        <DropDownPicker
+            open={open}
+            value={value}
+            items={items}
+            setOpen={setOpen}
+            setValue={setValue}
+            setItems={setItems}
+            style={{
+                borderWidth: 2,
+                borderColor: "#C0C0C0",
+                marginBottom: 12,
+            }}
+            textStyle={{
+                fontSize: 15,
+                color: "#545454"
+            }}
+        />
       <View style={styles.checkButtonBox}>
         <Checkbox.Item
           label="Supervisor: "
@@ -93,7 +124,7 @@ const styles = StyleSheet.create({
   },
   checkButtonBox: {
     borderWidth: 2,
-    borderColor: "#C0C0C0",
+    borderColor: "#C0C0C0"
   },
   checkButton: {
     justifyContent: "flex-start",
