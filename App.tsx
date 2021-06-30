@@ -1,6 +1,7 @@
 import React from "react";
 import { Provider as PaperProvider, DefaultTheme } from "react-native-paper";
 import { Provider as StateProvider } from "react-redux";
+import Toast from "react-native-toast-message";
 import "react-native-gesture-handler";
 import store from "./src/shared/data";
 import NavigationContainer from "./src/components/Navigation/NavigationContainer";
@@ -22,6 +23,7 @@ export default function App() {
     <StateProvider store={store}>
       <PaperProvider theme={theme}>
         <NavigationContainer theme={theme} />
+        <Toast ref={(ref) => Toast.setRef(ref)} />
       </PaperProvider>
     </StateProvider>
   );

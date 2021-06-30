@@ -9,6 +9,7 @@ import { fetchTheses, setAllThesis } from "../shared/data/thesis";
 import { getAllThesis } from "../shared/data/thesis/selectors";
 import { Category, Thesis, IThesisStatus, AppState } from "../shared/types";
 import { Button } from "react-native-paper";
+import { fetchAllUsers } from "../shared/data/auth";
 
 const ThesisOverview: React.FC<ThesisOverviewProps> = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const ThesisOverview: React.FC<ThesisOverviewProps> = ({ navigation }) => {
 
   React.useEffect(() => {
     dispatch(fetchTheses());
+    dispatch(fetchAllUsers());
   }, [dispatch]);
 
   const goToFilter = () => navigation.navigate("Filter");

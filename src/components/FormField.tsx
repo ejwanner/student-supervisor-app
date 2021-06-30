@@ -9,6 +9,7 @@ type FormFieldProps = {
   onChange: (text: string) => void;
   disabled?: boolean;
   secureTextEntry?: boolean;
+  multiline?: boolean;
 };
 
 const FormField: React.FC<FormFieldProps> = ({
@@ -18,6 +19,7 @@ const FormField: React.FC<FormFieldProps> = ({
   onChange,
   disabled,
   secureTextEntry,
+  multiline,
 }) => {
   return (
     <TextInput
@@ -30,6 +32,7 @@ const FormField: React.FC<FormFieldProps> = ({
       autoCapitalize="none"
       disabled={disabled}
       secureTextEntry={secureTextEntry}
+      multiline={multiline}
     />
   );
 };

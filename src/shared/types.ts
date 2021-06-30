@@ -2,12 +2,14 @@ import { ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
 
 export interface Thesis {
-  _id: string;
+  _id?: string;
   title: string;
   description: string;
   status: ThesisStatus;
   category: string;
-  supervisorId: UserInfo;
+  supervisorId?: string;
+  secondSupervisorId?: string;
+  createdBy?: string;
 
   // will be added later
   // student?: null;

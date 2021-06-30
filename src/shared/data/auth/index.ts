@@ -1,3 +1,4 @@
+import Toast from "react-native-toast-message";
 import {
   AppState,
   AppDispatch,
@@ -10,6 +11,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export const login = (user: UserLogin) => async (dispatch: AppDispatch) => {
   return com.loginUser(user).then((res) => {
+    Toast.show({ type: "success", text1: "Login was successfull" });
     dispatch(setToken(res.access_token));
     dispatch(setUserInfo(res.userInfo));
   });
@@ -19,9 +21,10 @@ export const updateUser =
   (user: UserInfo) =>
   async (dispatch: AppDispatch, getState: () => AppState) => {
     const token = getState().auth.token || "";
-    return com
-      .updateUser(user, token)
-      .then((res) => dispatch(setUserInfo(res)));
+    return com.updateUser(user, token).then((res) => {
+      Toast.show({ type: "success", text1: "User info was updated" });
+      dispatch(setUserInfo(res));
+    });
   };
 
 export const fetchAllUsers =

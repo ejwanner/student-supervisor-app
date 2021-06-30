@@ -1,4 +1,5 @@
 import io, { Socket } from "socket.io-client";
+import Toast from "react-native-toast-message";
 import { AppDispatch, AppState, Message, UserInfo } from "./types";
 import {
   fetchAllConversations,
@@ -42,6 +43,13 @@ export const startSocketIO =
     });
 
     socket.on(`receive-${getState().auth.userInfo._id}`, (message: Message) => {
+      if (message.createdBy._id !== getState().auth.userInfo._id) {
+        Toast.show({
+          type: "success",
+          text1: message.createdBy.name,
+          text2: message.message,
+        });
+      }
       dispatch(receiveMessage(message));
       dispatch(fetchMessages());
       dispatch(fetchAllConversations());

@@ -67,7 +67,7 @@ export const fetchThesisById = async (token: string | null, id: string) => {
     .catch(throwError);
 };
 
-export const createThesis = async (thesis: Thesis, token: string | null) => {
+export const createThesis = async (token: string | null, thesis: Thesis) => {
   return Axios.post(`${API_URL}/thesis`, thesis, getAuthorizedHeader(token))
     .then(parseBody)
     .catch(throwError);

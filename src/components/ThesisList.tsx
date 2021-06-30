@@ -13,9 +13,11 @@ type ThesisListProps = {
 const ThesisList: React.FC<ThesisListProps> = ({ thesisItems, navigation }) => {
   const dispatch = useDispatch();
 
-  const navigateToThesisDetail = async (id: string) => {
-    await dispatch(fetchThesisById(id));
-    navigation.navigate("Thesis Detail");
+  const navigateToThesisDetail = async (id?: string) => {
+    if (id) {
+      await dispatch(fetchThesisById(id));
+      navigation.navigate("Thesis Detail");
+    }
   };
 
   return (
