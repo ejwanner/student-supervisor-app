@@ -1,26 +1,14 @@
 import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import FilterButton from "../components/FilterButton";
+import { useSelector } from "react-redux";
 import ThesisList from "../components/ThesisList";
 import ViewContainer from "../components/ViewContainer";
-import { ALL_CATEGORIES, ALL_THESIS, THESIS_STATI } from "../shared/constants";
-import { fetchTheses, setAllThesis } from "../shared/data/thesis";
 import { getAllThesis } from "../shared/data/thesis/selectors";
-import { Category, Thesis, IThesisStatus, AppState } from "../shared/types";
+import { Thesis, AppState } from "../shared/types";
 import { Button } from "react-native-paper";
-import { fetchAllUsers } from "../shared/data/auth";
 
 const ThesisOverview: React.FC<ThesisOverviewProps> = ({ navigation }) => {
-  const dispatch = useDispatch();
   const allThesis = useSelector<AppState, Thesis[]>(getAllThesis);
-  const [thesisStatus] = React.useState<IThesisStatus[]>(THESIS_STATI);
-  const [thesisCategories] = React.useState<Category[]>(ALL_CATEGORIES);
-
-  React.useEffect(() => {
-    dispatch(fetchTheses());
-    dispatch(fetchAllUsers());
-  }, [dispatch]);
 
   const goToFilter = () => navigation.navigate("Filter");
 

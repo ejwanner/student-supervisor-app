@@ -9,6 +9,7 @@ export interface Thesis {
   category: string;
   supervisorId?: string;
   secondSupervisorId?: string;
+  studentId?: string;
   createdBy?: string;
 }
 

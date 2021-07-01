@@ -38,6 +38,19 @@ export const createNewThesis =
       .catch(() => Toast.show({ type: "error", text1: "An error occured" }));
   };
 
+export const updateThesis =
+  (thesis: Thesis) =>
+  async (dispatch: AppDispatch, getState: () => AppState) => {
+    const token = getState().auth.token;
+    return com
+      .updateThesis(thesis, token)
+      .then((res) => {
+        dispatch(refreshThesis(res));
+        Toast.show({ type: "success", text1: "Thesis was updated" });
+      })
+      .catch(() => Toast.show({ type: "error", text1: "An error occured" }));
+  };
+
 const thesisSlice = createSlice({
   name: "thesis",
   initialState,
@@ -54,9 +67,15 @@ const thesisSlice = createSlice({
     extendThesis(state, action: PayloadAction<Thesis>) {
       state.allThesis = [...state.allThesis, action.payload];
     },
+    refreshThesis(state, action: PayloadAction<Thesis>) {
+      state.allThesis = [
+        ...state.allThesis.filter((t) => t._id !== action.payload._id),
+        action.payload,
+      ];
+    },
   },
 });
 
-export const { setAllThesis, setSelectedThesis, extendThesis } =
+export const { setAllThesis, setSelectedThesis, extendThesis, refreshThesis } =
   thesisSlice.actions;
 export default thesisSlice.reducer;

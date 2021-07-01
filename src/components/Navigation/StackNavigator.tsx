@@ -7,11 +7,13 @@ import Header from "../Header";
 import Settings from "../../views/Settings";
 import ThesisDetail from "../../views/ThesisDetail";
 import Chat from "../../views/Chat";
-import UserList from "../../views/UserList";
+import UserList from "../UserList";
 import Messenger from "../../views/Messenger";
 import Filter from "../../views/Filter";
 import MyThesis from "../../views/MyThesis";
 import NewThesis from "../../views/NewThesis";
+import NewConversation from "../../views/NewConversation";
+import AddSupervisor from "../../views/AddSupervisor";
 
 const Stack = createStackNavigator();
 
@@ -60,7 +62,7 @@ export const ChatStackNavigator: React.FC = () => {
   return (
     <StackNavigator>
       <Stack.Screen name="Chat" component={Chat} />
-      <Stack.Screen name="User List" component={UserList} />
+      <Stack.Screen name="New Conversation" component={NewConversation} />
       <Stack.Screen name="Messenger" component={Messenger} />
     </StackNavigator>
   );
@@ -72,6 +74,7 @@ export const MyStackNavigator: React.FC = () => {
       <Stack.Screen name="My Thesis" component={MyThesis} />
       <Stack.Screen name="New Thesis" component={NewThesis} />
       <Stack.Screen name="Thesis Detail" component={ThesisDetail} />
+      <Stack.Screen name="Add Supervisor" component={AddSupervisor} />
     </StackNavigator>
   );
 };

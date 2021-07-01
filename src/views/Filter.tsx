@@ -1,9 +1,8 @@
 import React from "react";
 import ViewContainer from "../components/ViewContainer";
-import { useIsFocused } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllStatus, setFilterStatus } from "../shared/data/status";
-import { fetchCategories, setFilterCategory } from "../shared/data/category";
+import { setFilterStatus } from "../shared/data/status";
+import { setFilterCategory } from "../shared/data/category";
 import { AppState, Status, Category } from "../shared/types";
 import { getAllStatus, getFilterStatus } from "../shared/data/status/selectors";
 import {
@@ -18,20 +17,12 @@ type FilterProps = {
 };
 
 const Filter: React.FC<FilterProps> = ({ navigation }) => {
-  const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const allStatus = useSelector<AppState, Status[]>(getAllStatus);
   const filterStatus = useSelector<AppState, Status | null>(getFilterStatus);
   const allCategories = useSelector<AppState, Category[]>(getAllCategories);
   const filterCategory =
     useSelector<AppState, Category | null>(getFilterCategory);
-
-  React.useEffect(() => {
-    if (isFocused) {
-      dispatch(fetchAllStatus());
-      dispatch(fetchCategories());
-    }
-  }, [isFocused]);
 
   const selectStatusFilter = (status: Status | null) => {
     dispatch(setFilterStatus(status));

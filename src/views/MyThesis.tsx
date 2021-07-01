@@ -13,6 +13,7 @@ type MyThesisProps = {
 
 const MyThesis: React.FC<MyThesisProps> = ({ navigation }) => {
   const myThesis = useSelector<AppState, Thesis[]>(getMyThesis);
+
   const openNewThesisForm = () => {
     navigation.navigate("New Thesis");
   };
