@@ -10,6 +10,8 @@ import Chat from "../../views/Chat";
 import UserList from "../../views/UserList";
 import Messenger from "../../views/Messenger";
 import Filter from "../../views/Filter";
+import MyThesis from "../../views/MyThesis";
+import NewThesis from "../../views/NewThesis";
 
 const Stack = createStackNavigator();
 
@@ -60,6 +62,16 @@ export const ChatStackNavigator: React.FC = () => {
       <Stack.Screen name="Chat" component={Chat} />
       <Stack.Screen name="User List" component={UserList} />
       <Stack.Screen name="Messenger" component={Messenger} />
+    </StackNavigator>
+  );
+};
+
+export const MyStackNavigator: React.FC = () => {
+  return (
+    <StackNavigator>
+      <Stack.Screen name="My Thesis" component={MyThesis} />
+      <Stack.Screen name="New Thesis" component={NewThesis} />
+      <Stack.Screen name="Thesis Detail" component={ThesisDetail} />
     </StackNavigator>
   );
 };

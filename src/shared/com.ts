@@ -49,8 +49,8 @@ export const updateUser = async (
     .catch(throwError);
 };
 
-export const fetchThesis = async (token: string | null) => {
-  return Axios.get(`${API_URL}/thesis`, getAuthorizedHeader(token))
+export const fetchTheses = async (token: string | null) => {
+  return Axios.get(`${API_URL}/theses`, getAuthorizedHeader(token))
     .then(parseBody)
     .catch(throwError);
 };
@@ -61,7 +61,13 @@ export const fetchThesisForUser = async (token: string | null) => {
     .catch(throwError);
 };
 
-export const createThesis = async (thesis: Thesis, token: string | null) => {
+export const fetchThesisById = async (token: string | null, id: string) => {
+  return Axios.get(`${API_URL}/thesis/${id}`, getAuthorizedHeader(token))
+    .then(parseBody)
+    .catch(throwError);
+};
+
+export const createThesis = async (token: string | null, thesis: Thesis) => {
   return Axios.post(`${API_URL}/thesis`, thesis, getAuthorizedHeader(token))
     .then(parseBody)
     .catch(throwError);

@@ -1,6 +1,8 @@
 import React from "react";
 import { View } from "react-native";
 import { Divider, IconButton, List } from "react-native-paper";
+import { useDispatch } from "react-redux";
+import { fetchThesisById } from "../shared/data/thesis";
 import { Thesis } from "../shared/types";
 
 type ThesisListProps = {
@@ -9,6 +11,15 @@ type ThesisListProps = {
 };
 
 const ThesisList: React.FC<ThesisListProps> = ({ thesisItems, navigation }) => {
+  const dispatch = useDispatch();
+
+  const navigateToThesisDetail = async (id?: string) => {
+    if (id) {
+      await dispatch(fetchThesisById(id));
+      navigation.navigate("Thesis Detail");
+    }
+  };
+
   return (
     <>
       {thesisItems &&
@@ -24,7 +35,7 @@ const ThesisList: React.FC<ThesisListProps> = ({ thesisItems, navigation }) => {
                   key={`thesis-list-btn-${index}`}
                   icon="book-information-variant"
                   size={20}
-                  onPress={() => navigation.navigate("Thesis Detail")}
+                  onPress={() => navigateToThesisDetail(thesisItem._id)}
                 />
               )}
             />

@@ -2,17 +2,14 @@ import { ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
 
 export interface Thesis {
-  id: number; // muss ein string sein
+  _id?: string;
   title: string;
   description: string;
   status: ThesisStatus;
-  category: number; //muss ein string sein
-
-  // will be added later
-  student?: null;
-  supervisor?: null;
-  second_supervisor?: null;
-  created_by?: null; //braucht man nicht??
+  category: string;
+  supervisorId?: string;
+  secondSupervisorId?: string;
+  createdBy?: string;
 }
 
 export enum ThesisStatus {
@@ -83,6 +80,7 @@ export type AppState = {
 export type ThesisState = {
   allThesis: Thesis[];
   myThesis: Thesis[];
+  selectedThesis: Thesis | null;
 };
 
 export type AuthState = {

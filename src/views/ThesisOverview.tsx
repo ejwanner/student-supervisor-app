@@ -1,14 +1,15 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import FilterButton from "../components/FilterButton";
 import ThesisList from "../components/ThesisList";
 import ViewContainer from "../components/ViewContainer";
 import { ALL_CATEGORIES, ALL_THESIS, THESIS_STATI } from "../shared/constants";
-import { setAllThesis } from "../shared/data/thesis";
+import { fetchTheses, setAllThesis } from "../shared/data/thesis";
 import { getAllThesis } from "../shared/data/thesis/selectors";
 import { Category, Thesis, IThesisStatus, AppState } from "../shared/types";
 import { Button } from "react-native-paper";
+import { fetchAllUsers } from "../shared/data/auth";
 
 const ThesisOverview: React.FC<ThesisOverviewProps> = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -17,9 +18,9 @@ const ThesisOverview: React.FC<ThesisOverviewProps> = ({ navigation }) => {
   const [thesisCategories] = React.useState<Category[]>(ALL_CATEGORIES);
 
   React.useEffect(() => {
-    // replace with real action when there
-    dispatch(setAllThesis(ALL_THESIS));
-  }, []);
+    dispatch(fetchTheses());
+    dispatch(fetchAllUsers());
+  }, [dispatch]);
 
   const goToFilter = () => navigation.navigate("Filter");
 
@@ -30,7 +31,9 @@ const ThesisOverview: React.FC<ThesisOverviewProps> = ({ navigation }) => {
           Filter
         </Button>
       </View>
-      <ThesisList thesisItems={allThesis} navigation={navigation} />
+      <ScrollView>
+        <ThesisList thesisItems={allThesis} navigation={navigation} />
+      </ScrollView>
     </ViewContainer>
   );
 };
@@ -54,7 +57,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: 12,
     paddingBottom: 18,
-    marginBottom: 18,
     borderBottomColor: "rgba(0,0,0,0.1)",
     borderBottomWidth: 1,
   },
