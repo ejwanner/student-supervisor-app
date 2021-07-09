@@ -18,13 +18,23 @@ enum Mode {
   Readonly = "Readonly",
 }
 
-const ThesisDetail = () => {
+type ThesisDetailProps = {
+  navigation: any;
+};
+
+const ThesisDetail: React.FC<ThesisDetailProps> = ({ navigation }) => {
   const dispatch = useDispatch();
   const selectedThesis =
     useSelector<AppState, Thesis | null>(getSelectedThesis);
   const user = useSelector<AppState, UserInfo>(getUserInfo);
   const supervisor = useSelector<AppState, UserInfo | undefined>((state) =>
     getUserById(state, selectedThesis?.supervisorId)
+  );
+  const secondSupervisor = useSelector<AppState, UserInfo | undefined>(
+    (state) => getUserById(state, selectedThesis?.secondSupervisorId)
+  );
+  const student = useSelector<AppState, UserInfo | undefined>((state) =>
+    getUserById(state, selectedThesis?.studentId)
   );
   const isSupervisorOfSelectedThesis =
     useSelector<AppState, boolean>(isSupervisorOfThesis);
@@ -40,8 +50,9 @@ const ThesisDetail = () => {
     dispatch(
       updateThesis({
         ...values,
-        supervisorId: "",
-        secondSupervisorId: "",
+        supervisorId: selectedThesis?.supervisorId || "",
+        secondSupervisorId: selectedThesis?.secondSupervisorId || "",
+        studentId: selectedThesis?.studentId || "",
       })
     );
   };
@@ -61,9 +72,12 @@ const ThesisDetail = () => {
       )}
       {selectedThesis && (
         <ThesisForm
+          navigation={navigation}
           thesisValues={selectedThesis}
           disabled={mode === Mode.Readonly}
           supervisor={supervisor}
+          secondSupervisor={secondSupervisor}
+          student={student}
           isSupervisor={user.supervisor}
           submit={update}
         />

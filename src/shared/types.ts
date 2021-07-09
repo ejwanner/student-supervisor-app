@@ -105,3 +105,9 @@ export type StatusState = {
   allStatus: Status[];
   filterStatus: Status | null;
 };
+
+export enum AddSupervisorType {
+  Supervisor,
+  SecondSupervisor,
+  Student,
+}

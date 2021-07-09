@@ -46,6 +46,7 @@ export const updateThesis =
       .updateThesis(thesis, token)
       .then((res) => {
         dispatch(refreshThesis(res));
+        dispatch(setSelectedThesis(res));
         Toast.show({ type: "success", text1: "Thesis was updated" });
       })
       .catch(() => Toast.show({ type: "error", text1: "An error occured" }));

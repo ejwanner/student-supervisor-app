@@ -2,21 +2,27 @@ import React from "react";
 import { Button, Chip, IconButton, Text } from "react-native-paper";
 import { Controller, useForm } from "react-hook-form";
 import { View } from "react-native";
-import { Thesis, UserInfo } from "../../shared/types";
+import { AddSupervisorType, Thesis, UserInfo } from "../../shared/types";
 import FormField from "../FormField";
 
 type ThesisFormProps = {
+  navigation: any;
   thesisValues: Thesis;
   disabled?: boolean;
   supervisor?: UserInfo;
+  secondSupervisor?: UserInfo;
+  student?: UserInfo;
   isSupervisor?: boolean;
   submit: (values: Thesis) => void;
 };
 
 const ThesisForm: React.FC<ThesisFormProps> = ({
+  navigation,
   thesisValues,
   disabled,
   supervisor,
+  secondSupervisor,
+  student,
   isSupervisor,
   submit,
 }) => {
@@ -38,7 +44,28 @@ const ThesisForm: React.FC<ThesisFormProps> = ({
           marginTop: 10,
         }}
       >
-        <Text>Supervised by: {supervisor && supervisor.name}</Text>
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <Text>Supervised by: </Text>
+          {supervisor ? (
+            <Text>{supervisor.name}</Text>
+          ) : (
+            <IconButton
+              icon="account-plus"
+              disabled={disabled || !isSupervisor}
+              onPress={() =>
+                navigation.navigate("Add Supervisor", {
+                  type: AddSupervisorType.Supervisor,
+                })
+              }
+            />
+          )}
+        </View>
         <Controller
           control={control}
           render={({ field: { value } }) => <Chip>{value}</Chip>}
@@ -55,7 +82,28 @@ const ThesisForm: React.FC<ThesisFormProps> = ({
           marginTop: 10,
         }}
       >
-        <Text>Controlled by: {thesisValues.secondSupervisorId}</Text>
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <Text>Controlled by: </Text>
+          {secondSupervisor ? (
+            <Text>{secondSupervisor.name}</Text>
+          ) : (
+            <IconButton
+              icon="account-plus"
+              disabled={disabled || !isSupervisor}
+              onPress={() =>
+                navigation.navigate("Add Supervisor", {
+                  type: AddSupervisorType.SecondSupervisor,
+                })
+              }
+            />
+          )}
+        </View>
       </View>
       <View
         style={{
@@ -67,7 +115,28 @@ const ThesisForm: React.FC<ThesisFormProps> = ({
           marginTop: 10,
         }}
       >
-        <Text>Student is : {thesisValues.studentId}</Text>
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <Text>Student: </Text>
+          {student ? (
+            <Text>{student.name}</Text>
+          ) : (
+            <IconButton
+              icon="account-plus"
+              disabled={disabled || !isSupervisor}
+              onPress={() =>
+                navigation.navigate("Add Supervisor", {
+                  type: AddSupervisorType.Student,
+                })
+              }
+            />
+          )}
+        </View>
       </View>
       <Controller
         control={control}
@@ -109,20 +178,7 @@ const ThesisForm: React.FC<ThesisFormProps> = ({
         )}
         name="category"
       />
-      <View
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
-        <IconButton icon="account-plus" disabled={disabled || !isSupervisor} />
-        <IconButton
-          icon="account-multiple-plus"
-          disabled={disabled || !isSupervisor}
-        />
-      </View>
+
       {!disabled && (
         <Button mode="contained" onPress={handleSubmit(submit)}>
           Save

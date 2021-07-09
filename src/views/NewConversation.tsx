@@ -23,7 +23,11 @@ const NewConversation: React.FC<NewConversationProps> = ({ navigation }) => {
   };
   return (
     <ViewContainer>
-      <UserList navigation={navigation} action={create} />
+      <UserList
+        navigation={navigation}
+        action={create}
+        onlySupervisors={!me.supervisor}
+      />
     </ViewContainer>
   );
 };

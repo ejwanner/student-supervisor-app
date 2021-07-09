@@ -27,7 +27,11 @@ const NewThesis: React.FC<NewThesisProps> = ({ navigation }) => {
 
   return (
     <ViewContainer>
-      <ThesisForm thesisValues={newThesis} submit={createThesis} />
+      <ThesisForm
+        navigation={navigation}
+        thesisValues={newThesis}
+        submit={createThesis}
+      />
     </ViewContainer>
   );
 };

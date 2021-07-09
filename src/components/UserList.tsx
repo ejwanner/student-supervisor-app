@@ -8,10 +8,17 @@ import { Button, DataTable } from "react-native-paper";
 type UserListProps = {
   navigation: any;
   action: (user: UserInfo) => void;
+  onlySupervisors?: boolean;
 };
 
-const UserList: React.FC<UserListProps> = ({ navigation, action }) => {
-  const allUsers = useSelector<AppState, UserInfo[]>(getAllUsers);
+const UserList: React.FC<UserListProps> = ({ action, onlySupervisors }) => {
+  const allUsers = onlySupervisors
+    ? useSelector<AppState, UserInfo[]>(getAllUsers).filter(
+        (u) => u.supervisor === true
+      )
+    : useSelector<AppState, UserInfo[]>(getAllUsers).filter(
+        (u) => u.supervisor === false
+      );
 
   return (
     <ViewContainer>
