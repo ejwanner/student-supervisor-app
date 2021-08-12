@@ -51,7 +51,7 @@ const Chat: React.FC<ChatProps> = ({ navigation }) => {
       <View style={styles.header}>
         <Button
           mode="contained"
-          onPress={() => navigation.navigate("User List")}
+          onPress={() => navigation.navigate("New Conversation")}
         >
           Create Conversation
         </Button>

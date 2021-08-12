@@ -74,7 +74,11 @@ export const createThesis = async (token: string | null, thesis: Thesis) => {
 };
 
 export const updateThesis = async (thesis: Thesis, token: string | null) => {
-  return Axios.put(`${API_URL}/thesis`, thesis, getAuthorizedHeader(token))
+  return Axios.put(
+    `${API_URL}/thesis/${thesis._id}`,
+    thesis,
+    getAuthorizedHeader(token)
+  )
     .then(parseBody)
     .catch(throwError);
 };

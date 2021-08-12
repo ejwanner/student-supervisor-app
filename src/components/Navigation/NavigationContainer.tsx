@@ -4,7 +4,11 @@ import { BottomTabs } from "./BottomNavigator";
 import { AuthStackNavigator } from "./StackNavigator";
 import { AppState, UserInfo } from "../../shared/types";
 import { getToken, getUserInfo } from "../../shared/data/auth/selectors";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
+import { fetchAllStatus } from "../../shared/data/status";
+import { fetchTheses } from "../../shared/data/thesis";
+import { fetchCategories } from "../../shared/data/category";
+import { fetchAllUsers } from "../../shared/data/auth";
 
 interface StateProps {
   token: string | null;
@@ -21,6 +25,15 @@ const NavigationContainer: React.FC<NavigationContainerProps> = ({
   theme,
   token,
 }) => {
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    if (token) {
+      dispatch(fetchAllStatus());
+      dispatch(fetchTheses());
+      dispatch(fetchCategories());
+      dispatch(fetchAllUsers());
+    }
+  }, [token]);
   return (
     <NavContainer theme={theme}>
       {!token ? <AuthStackNavigator /> : <BottomTabs />}

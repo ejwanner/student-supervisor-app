@@ -1,9 +1,8 @@
 import React from "react";
 import ViewContainer from "../components/ViewContainer";
-import { useIsFocused } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllStatus, setFilterStatus } from "../shared/data/status";
-import { fetchCategories, setFilterCategory } from "../shared/data/category";
+import { setFilterStatus } from "../shared/data/status";
+import { setFilterCategory } from "../shared/data/category";
 import { AppState, Status, Category } from "../shared/types";
 import { getAllStatus, getFilterStatus } from "../shared/data/status/selectors";
 import {
@@ -12,26 +11,19 @@ import {
 } from "../shared/data/category/selectors";
 import { Button, Divider, List, RadioButton, Text } from "react-native-paper";
 import { ScrollView } from "react-native";
+import { setThesisFilterObject } from "../shared/data/thesis";
 
 type FilterProps = {
   navigation: any;
 };
 
 const Filter: React.FC<FilterProps> = ({ navigation }) => {
-  const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const allStatus = useSelector<AppState, Status[]>(getAllStatus);
   const filterStatus = useSelector<AppState, Status | null>(getFilterStatus);
   const allCategories = useSelector<AppState, Category[]>(getAllCategories);
   const filterCategory =
     useSelector<AppState, Category | null>(getFilterCategory);
-
-  React.useEffect(() => {
-    if (isFocused) {
-      dispatch(fetchAllStatus());
-      dispatch(fetchCategories());
-    }
-  }, [isFocused]);
 
   const selectStatusFilter = (status: Status | null) => {
     dispatch(setFilterStatus(status));
@@ -40,6 +32,11 @@ const Filter: React.FC<FilterProps> = ({ navigation }) => {
   const selectCategoryFilter = (category: Category | null) => {
     dispatch(setFilterCategory(category));
   };
+
+  const applyFilters = () => {
+    dispatch(setThesisFilterObject())
+    return navigation.goBack(null)
+  }
 
   return (
     <ViewContainer>
@@ -119,7 +116,7 @@ const Filter: React.FC<FilterProps> = ({ navigation }) => {
         <Button
           mode="contained"
           style={{ marginTop: 24, marginBottom: 24 }}
-          onPress={() => navigation.navigate("Thesis Overview")}
+          onPress={applyFilters}
         >
           Apply Filters
         </Button>

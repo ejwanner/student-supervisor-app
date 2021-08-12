@@ -9,13 +9,8 @@ export interface Thesis {
   category: string;
   supervisorId?: string;
   secondSupervisorId?: string;
+  studentId?: string;
   createdBy?: string;
-
-  // will be added later
-  // student?: null;
-  // supervisor?: null;
-  // second_supervisor?: null;
-  // created_by?: null;
 }
 
 export enum ThesisStatus {
@@ -44,7 +39,9 @@ export interface UserRegister {
   email: string;
   name: string;
   password: string;
+  category: string;
   supervisor: boolean;
+  preferredCategory: string;
 }
 
 export type UserLogin = Omit<UserRegister, "supervisor" | "name">;
@@ -85,6 +82,7 @@ export type ThesisState = {
   allThesis: Thesis[];
   myThesis: Thesis[];
   selectedThesis: Thesis | null;
+  thesisFilter: ThesisFilter | null;
 };
 
 export type AuthState = {
@@ -108,3 +106,14 @@ export type StatusState = {
   allStatus: Status[];
   filterStatus: Status | null;
 };
+
+export enum AddSupervisorType {
+  Supervisor,
+  SecondSupervisor,
+  Student,
+}
+
+export type ThesisFilter = {
+  status: string | null
+  category: string | null
+}

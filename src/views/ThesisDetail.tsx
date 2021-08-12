@@ -1,37 +1,61 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ViewContainer from "../components/ViewContainer";
 import ThesisForm from "../components/forms/ThesisForm";
 import {
   getSelectedThesis,
+  hasCreatedSelectedThesis,
   isSupervisorOfThesis,
 } from "../shared/data/thesis/selectors";
 import { AppState, Thesis, UserInfo } from "../shared/types";
 import { getUserById, getUserInfo } from "../shared/data/auth/selectors";
 import { ToggleButton } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
+import { updateThesis } from "../shared/data/thesis";
 
 enum Mode {
   Edit = "Edit",
   Readonly = "Readonly",
 }
 
-const ThesisDetail = () => {
+type ThesisDetailProps = {
+  navigation: any;
+};
+
+const ThesisDetail: React.FC<ThesisDetailProps> = ({ navigation }) => {
+  const dispatch = useDispatch();
   const selectedThesis =
     useSelector<AppState, Thesis | null>(getSelectedThesis);
   const user = useSelector<AppState, UserInfo>(getUserInfo);
   const supervisor = useSelector<AppState, UserInfo | undefined>((state) =>
     getUserById(state, selectedThesis?.supervisorId)
   );
+  const secondSupervisor = useSelector<AppState, UserInfo | undefined>(
+    (state) => getUserById(state, selectedThesis?.secondSupervisorId)
+  );
+  const student = useSelector<AppState, UserInfo | undefined>((state) =>
+    getUserById(state, selectedThesis?.studentId)
+  );
   const isSupervisorOfSelectedThesis =
     useSelector<AppState, boolean>(isSupervisorOfThesis);
+  const hasCreatedThesis = useSelector<AppState, boolean>(
+    hasCreatedSelectedThesis
+  );
+
   const [mode, setMode] = React.useState<Mode>(Mode.Readonly);
 
-  // TODO: extend permission with creator of thesis
-  const hasWritePermission = user.supervisor && isSupervisorOfSelectedThesis;
+  const hasWritePermission = isSupervisorOfSelectedThesis || hasCreatedThesis;
 
-  const updateThesis = (values: Thesis) =>
-    console.log("Thesis update: ", values);
+  const update = (values: Thesis) => {
+    dispatch(
+      updateThesis({
+        ...values,
+        supervisorId: selectedThesis?.supervisorId || "",
+        secondSupervisorId: selectedThesis?.secondSupervisorId || "",
+        studentId: selectedThesis?.studentId || "",
+      })
+    );
+  };
 
   return (
     <ViewContainer>
@@ -48,10 +72,14 @@ const ThesisDetail = () => {
       )}
       {selectedThesis && (
         <ThesisForm
+          navigation={navigation}
           thesisValues={selectedThesis}
           disabled={mode === Mode.Readonly}
           supervisor={supervisor}
-          submit={updateThesis}
+          secondSupervisor={secondSupervisor}
+          student={student}
+          isSupervisor={user.supervisor}
+          submit={update}
         />
       )}
     </ViewContainer>

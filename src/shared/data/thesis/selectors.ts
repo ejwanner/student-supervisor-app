@@ -17,3 +17,9 @@ export const getMyThesis = (state: AppState) =>
 export const isSupervisorOfThesis = (state: AppState): boolean => {
   return state.thesis.selectedThesis?.supervisorId === state.auth.userInfo._id;
 };
+
+export const hasCreatedSelectedThesis = (state: AppState) => {
+  return state.thesis.selectedThesis?.createdBy === state.auth.userInfo._id;
+};
+
+export const getThesisFilter = (state: AppState) => state.thesis.thesisFilter
