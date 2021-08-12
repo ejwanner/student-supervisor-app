@@ -11,6 +11,7 @@ import {
 } from "../shared/data/category/selectors";
 import { Button, Divider, List, RadioButton, Text } from "react-native-paper";
 import { ScrollView } from "react-native";
+import { setThesisFilterObject } from "../shared/data/thesis";
 
 type FilterProps = {
   navigation: any;
@@ -31,6 +32,11 @@ const Filter: React.FC<FilterProps> = ({ navigation }) => {
   const selectCategoryFilter = (category: Category | null) => {
     dispatch(setFilterCategory(category));
   };
+
+  const applyFilters = () => {
+    dispatch(setThesisFilterObject())
+    return navigation.goBack(null)
+  }
 
   return (
     <ViewContainer>
@@ -110,7 +116,7 @@ const Filter: React.FC<FilterProps> = ({ navigation }) => {
         <Button
           mode="contained"
           style={{ marginTop: 24, marginBottom: 24 }}
-          onPress={() => navigation.navigate("Thesis Overview")}
+          onPress={applyFilters}
         >
           Apply Filters
         </Button>

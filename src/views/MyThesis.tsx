@@ -2,10 +2,12 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Button } from "react-native-paper";
 import { useSelector } from "react-redux";
+import FilterWrapper from "../components/FilterWrapper";
 import ThesisList from "../components/ThesisList";
 import ViewContainer from "../components/ViewContainer";
-import { getMyThesis } from "../shared/data/thesis/selectors";
-import { AppState, Thesis } from "../shared/types";
+import { getMyThesis, getThesisFilter } from "../shared/data/thesis/selectors";
+import { filteredThesis } from "../shared/helpers";
+import { AppState, Thesis, ThesisFilter } from "../shared/types";
 
 type MyThesisProps = {
   navigation: any;
@@ -13,18 +15,20 @@ type MyThesisProps = {
 
 const MyThesis: React.FC<MyThesisProps> = ({ navigation }) => {
   const myThesis = useSelector<AppState, Thesis[]>(getMyThesis);
+  const thesisFilter = useSelector<AppState, ThesisFilter | null>(getThesisFilter);
 
   const openNewThesisForm = () => {
     navigation.navigate("New Thesis");
   };
   return (
     <ViewContainer>
+      <FilterWrapper navigation={navigation} />
       <View style={styles.header}>
         <Button mode="outlined" onPress={openNewThesisForm}>
           New Thesis
         </Button>
       </View>
-      <ThesisList thesisItems={myThesis} navigation={navigation} />
+      <ThesisList thesisItems={filteredThesis(myThesis, thesisFilter)} navigation={navigation} />
     </ViewContainer>
   );
 };
@@ -35,6 +39,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     alignItems: "center",
     flexDirection: "row",
+    marginTop: 18,
     marginBottom: 18,
   },
 });

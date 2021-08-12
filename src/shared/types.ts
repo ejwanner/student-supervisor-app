@@ -82,6 +82,7 @@ export type ThesisState = {
   allThesis: Thesis[];
   myThesis: Thesis[];
   selectedThesis: Thesis | null;
+  thesisFilter: ThesisFilter | null;
 };
 
 export type AuthState = {
@@ -110,4 +111,9 @@ export enum AddSupervisorType {
   Supervisor,
   SecondSupervisor,
   Student,
+}
+
+export type ThesisFilter = {
+  status: string | null
+  category: string | null
 }

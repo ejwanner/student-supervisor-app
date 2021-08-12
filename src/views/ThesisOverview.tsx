@@ -3,24 +3,20 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
 import ThesisList from "../components/ThesisList";
 import ViewContainer from "../components/ViewContainer";
-import { getAllThesis } from "../shared/data/thesis/selectors";
-import { Thesis, AppState } from "../shared/types";
-import { Button } from "react-native-paper";
+import { getAllThesis, getThesisFilter } from "../shared/data/thesis/selectors";
+import { Thesis, AppState, ThesisFilter } from "../shared/types";
+import { filteredThesis } from "../shared/helpers";
+import FilterWrapper from "../components/FilterWrapper";
 
 const ThesisOverview: React.FC<ThesisOverviewProps> = ({ navigation }) => {
   const allThesis = useSelector<AppState, Thesis[]>(getAllThesis);
-
-  const goToFilter = () => navigation.navigate("Filter");
+  const thesisFilter = useSelector<AppState, ThesisFilter | null>(getThesisFilter);
 
   return (
     <ViewContainer>
-      <View style={styles.filterRow}>
-        <Button icon="filter" onPress={goToFilter}>
-          Filter
-        </Button>
-      </View>
+      <FilterWrapper navigation={navigation} />
       <ScrollView>
-        <ThesisList thesisItems={allThesis} navigation={navigation} />
+        <ThesisList thesisItems={filteredThesis(allThesis, thesisFilter)} navigation={navigation} />
       </ScrollView>
     </ViewContainer>
   );
@@ -37,17 +33,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 18,
   },
-  filterRow: {
-    width: "100%",
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    alignItems: "center",
-    paddingTop: 12,
-    paddingBottom: 18,
-    borderBottomColor: "rgba(0,0,0,0.1)",
-    borderBottomWidth: 1,
-  },
+
   filterBtn: {
     width: "25%",
   },

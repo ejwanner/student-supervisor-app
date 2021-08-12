@@ -75,6 +75,7 @@ export const MyStackNavigator: React.FC = () => {
       <Stack.Screen name="New Thesis" component={NewThesis} />
       <Stack.Screen name="Thesis Detail" component={ThesisDetail} />
       <Stack.Screen name="Add Supervisor" component={AddSupervisor} />
+      <Stack.Screen name="Filter" component={Filter} />
     </StackNavigator>
   );
 };
